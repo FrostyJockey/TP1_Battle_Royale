@@ -5,6 +5,8 @@ using Playmode.Entity.Destruction;
 using Playmode.Entity.Senses;
 using Playmode.Entity.Status;
 using Playmode.Movement;
+using Playmode.Pickups;
+using Playmode.Weapon;
 using UnityEngine;
 
 namespace Playmode.Ennemy
@@ -27,6 +29,9 @@ namespace Playmode.Ennemy
         private EnnemySensor ennemySensor;
         private HitSensor hitSensor;
         private HandController handController;
+        private WeaponSensor weaponSensor;
+        private MedkitSensorCollision medkitSensorCollision;
+        private WeaponSensorCollision weaponSensorCollision;
 
         private IEnnemyStrategy strategy;
 
@@ -69,6 +74,9 @@ namespace Playmode.Ennemy
             ennemySensor = rootTransform.GetComponentInChildren<EnnemySensor>();
             hitSensor = rootTransform.GetComponentInChildren<HitSensor>();
             handController = hand.GetComponent<HandController>();
+            weaponSensor = rootTransform.GetComponentInChildren<WeaponSensor>();
+            medkitSensorCollision = rootTransform.GetComponentInChildren<MedkitSensorCollision>();
+            weaponSensorCollision = rootTransform.GetComponentInChildren<WeaponSensorCollision>();
 
             strategy = new TurnAndShootStragegy(mover, handController);
         }
@@ -88,6 +96,8 @@ namespace Playmode.Ennemy
             ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             hitSensor.OnHit += OnHit;
             health.OnDeath += OnDeath;
+            medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
+            weaponSensorCollision.OnWeaponPickup += OnWeaponPickup;
         }
 
         private void Update()
@@ -101,6 +111,8 @@ namespace Playmode.Ennemy
             ennemySensor.OnEnnemySightLost -= OnEnnemySightLost;
             hitSensor.OnHit -= OnHit;
             health.OnDeath -= OnDeath;
+            medkitSensorCollision.OnMedkitPickup -= OnMedkitPickup;
+            weaponSensorCollision.OnWeaponPickup -= OnWeaponPickup;
         }
 
         public void Configure(EnnemyStrategy strategy, Color color)
@@ -147,6 +159,20 @@ namespace Playmode.Ennemy
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
             Debug.Log("I've lost sight of an ennemy...Yikes!!!");
+        }
+
+        private void OnMedkitPickup(MedkitController medkit)
+        {
+            Debug.Log("Picked up the medkit!");
+            health.Heal(medkit.HealthValue);
+        }
+
+        private void OnWeaponPickup(WeaponController weapon)
+        {
+            Debug.Log("Picked up the " + weapon.transform.root.gameObject.name + "!");
+
+            var currentWeapon = transform.root.GetComponentInChildren<WeaponController>();
+            currentWeapon.AddWeaponStats(weapon);
         }
     }
 }

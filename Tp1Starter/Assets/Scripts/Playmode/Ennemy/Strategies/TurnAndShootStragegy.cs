@@ -16,7 +16,7 @@ namespace Playmode.Ennemy.Strategies
 
         public void Act()
         {
-            mover.Rotate(Mover.Clockwise);
+            //mover.Rotate(Mover.Clockwise);
 
             handController.Use();
         }

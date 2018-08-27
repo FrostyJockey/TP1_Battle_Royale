@@ -5,7 +5,19 @@ namespace Playmode.Entity.Senses
 {
     public class HitStimulus : MonoBehaviour
     {
-        [Header("Behaviour")] [SerializeField] private int hitPoints = 10;
+        [SerializeField] private int bulletHitPoint = 0;
+
+        public int BulletDamage
+        {
+            get { return bulletHitPoint; }
+            set
+            {
+                if (bulletHitPoint != value)
+                {
+                    bulletHitPoint = value;
+                }
+            }
+        }
 
         private void Awake()
         {
@@ -14,13 +26,13 @@ namespace Playmode.Entity.Senses
 
         private void ValidateSerializeFields()
         {
-            if (hitPoints < 0)
+            if (bulletHitPoint < 0)
                 throw new ArgumentException("Hit points can't be less than 0.");
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            other.GetComponent<Entity.Senses.HitSensor>()?.Hit(hitPoints);
+            other.GetComponent<Entity.Senses.HitSensor>()?.Hit(bulletHitPoint);
         }
     }
 }

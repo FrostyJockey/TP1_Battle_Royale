@@ -56,6 +56,8 @@ GameObject:
   - component: {fileID: 212022067182938298}
   - component: {fileID: 60192341613569478}
   - component: {fileID: 114574195830500936}
+  - component: {fileID: 114715339013680728}
+  - component: {fileID: 114417159417800892}
   m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
@@ -73,9 +75,11 @@ GameObject:
   - component: {fileID: 4400638406319482}
   - component: {fileID: 114785109227199278}
   - component: {fileID: 50703390751095472}
+  - component: {fileID: 114733363898065244}
+  - component: {fileID: 114410169027726184}
   m_Layer: 0
   m_Name: Ennemy
-  m_TagString: Untagged
+  m_TagString: Ennemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,6 +96,7 @@ GameObject:
   - component: {fileID: 114771647671017566}
   - component: {fileID: 114363876809746526}
   - component: {fileID: 114083873472680612}
+  - component: {fileID: 114910725886742754}
   m_Layer: 0
   m_Name: Control
   m_TagString: Untagged
@@ -109,8 +114,8 @@ GameObject:
   - component: {fileID: 4053925637335584}
   - component: {fileID: 212208982915710918}
   - component: {fileID: 58758988853505006}
-  - component: {fileID: 114842752972343190}
   - component: {fileID: 114136075856512652}
+  - component: {fileID: 114098954644013822}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -164,7 +169,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1815521992430954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.658813, y: 0.8350725, z: 0}
+  m_LocalPosition: {x: -7.390687, y: 1.4632878, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4031371457590774}
@@ -275,6 +280,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896131d0d06d48d08bcbf4d0a7e56fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114098954644013822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880469799408478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5700e5d6a429cac479c6b19d94575ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114136075856512652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,6 +328,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   rotateSpeed: 90
+--- !u!114 &114410169027726184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815521992430954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc970fc2eaef4814a47dd9c254c32e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: 
+--- !u!114 &114417159417800892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699645007186046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93eb7e8609c6b44e97601f0f89c32e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114434491710286188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,6 +394,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d650ce41c0d4151a1d594c24c2bc7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114715339013680728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699645007186046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f436bec1130f0342b20d1fe317e1c08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114733363898065244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815521992430954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f859be1f935124fbce2570d6f3fccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114771647671017566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -378,14 +439,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc970fc2eaef4814a47dd9c254c32e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: "Ce RigidBody2D est n\xE9cessaire pour que les \r\ntriggers se d\xE9clanchent
-    m\xEAme s'ils sont en\r\nmouvement."
---- !u!114 &114842752972343190
+  text: 
+--- !u!114 &114910725886742754
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1880469799408478}
+  m_GameObject: {fileID: 1820966873026230}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 558ee3f855554354b94d249ae40f8ba9, type: 3}
