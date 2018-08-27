@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - MainController
+  - Medkit
+  - Shotgun
+  - Uzi
+  - Ennemy
+  - PickupSpawner
   layers:
   - Default
   - TransparentFX
