@@ -91,6 +91,8 @@ namespace Playmode.Weapon
 
                     var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
 
+                    bullet.GetComponentInChildren<HitStimulus>().BulletDamage = weaponDamagePerBullet;
+
                     bullet.transform.Rotate(0, 0, angleSpread);
                 }
 
