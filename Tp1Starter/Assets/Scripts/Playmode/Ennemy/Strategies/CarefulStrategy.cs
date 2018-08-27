@@ -30,7 +30,7 @@ namespace Playmode.Ennemy.Strategies
 
         public void Act()
         {
-            if(trackingEnnemy)
+            if (trackingEnnemy && target != null)
             {
                 Vector3 spaceBetweenEnnemies = target.gameObject.transform.position - mover.gameObject.transform.position;
                 
