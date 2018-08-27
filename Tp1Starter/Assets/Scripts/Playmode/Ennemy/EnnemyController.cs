@@ -21,6 +21,7 @@ namespace Playmode.Ennemy
         [SerializeField] private Sprite camperSprite;
         [Header("Behaviour")] [SerializeField] private GameObject startingWeaponPrefab;
 
+
         private Health health;
         private Mover mover;
         private Destroyer destroyer;
@@ -112,6 +113,7 @@ namespace Playmode.Ennemy
             {
                 case EnnemyStrategy.Careful:
                     typeSign.GetComponent<SpriteRenderer>().sprite = carefulSprite;
+                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor);
                     break;
                 case EnnemyStrategy.Cowboy:
                     typeSign.GetComponent<SpriteRenderer>().sprite = cowboySprite;
@@ -127,26 +129,26 @@ namespace Playmode.Ennemy
 
         private void OnHit(int hitPoints)
         {
-            Debug.Log("OW, I'm hurt! I'm really much hurt!!!");
+          
 
-            health.Hit(hitPoints);
+           health.Hit(hitPoints);
         }
 
         private void OnDeath()
         {
-            Debug.Log("Yaaaaarggg....!! I died....GG.");
+           
 
             destroyer.Destroy();
         }
 
         private void OnEnnemySeen(EnnemyController ennemy)
         {
-            Debug.Log("I've seen an ennemy!! Ya so dead noob!!!");
+           
         }
 
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
-            Debug.Log("I've lost sight of an ennemy...Yikes!!!");
+            
         }
     }
 }
