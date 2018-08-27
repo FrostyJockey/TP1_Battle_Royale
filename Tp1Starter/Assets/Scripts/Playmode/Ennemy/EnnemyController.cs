@@ -161,7 +161,6 @@ namespace Playmode.Ennemy
 
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
-<<<<<<< HEAD
 			Debug.Log("I've lost sight of an ennemy...Yikes!!!");
         }
 
@@ -177,9 +176,7 @@ namespace Playmode.Ennemy
 
             var currentWeapon = transform.root.GetComponentInChildren<WeaponController>();
             currentWeapon.AddWeaponStats(weapon);
-=======
-            
->>>>>>> f14758ce5bad900ee8eb821e07c221b091949dd1
+
         }
     }
 }
