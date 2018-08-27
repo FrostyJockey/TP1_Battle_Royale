@@ -7,8 +7,9 @@ namespace Playmode.Movement
     {
         public static readonly Vector3 Foward = Vector3.up;
         public const float Clockwise = 1f;
-        
-        [SerializeField] protected float speed = 1f;
+	    public const float CounterClockwise = -1f;
+
+		[SerializeField] protected float speed = 1f;
         [SerializeField] protected float rotateSpeed = 90f;
 
         protected void Awake()

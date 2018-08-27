@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Playmode.Ennemy;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace Playmode.Entity.Senses
 
         public void See(EnnemyController ennemy)
         {
-            ennemiesInSight.Add(ennemy);
+			ennemiesInSight.Add(ennemy);
 
             NotifyEnnemySeen(ennemy);
         }

@@ -43,7 +43,7 @@ namespace Playmode.Ennemy.BodyParts
 
         public void Use()
         {
-            if (weapon != null) weapon.Shoot();
+			if (weapon != null) weapon.Shoot();
         }
     }
 }

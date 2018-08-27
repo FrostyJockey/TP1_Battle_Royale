@@ -18,7 +18,7 @@ namespace Playmode.Ennemy.Strategies
         {
             mover.Rotate(Mover.Clockwise);
 
-            handController.Use();
+            //handController.Use();
         }
     }
 }

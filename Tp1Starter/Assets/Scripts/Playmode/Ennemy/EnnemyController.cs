@@ -84,8 +84,8 @@ namespace Playmode.Ennemy
 
         private void OnEnable()
         {
-            ennemySensor.OnEnnemySeen += OnEnnemySeen;
-            ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
+            //ennemySensor.OnEnnemySeen += OnEnnemySeen;
+            //ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             hitSensor.OnHit += OnHit;
             health.OnDeath += OnDeath;
         }
@@ -120,7 +120,8 @@ namespace Playmode.Ennemy
                     typeSign.GetComponent<SpriteRenderer>().sprite = camperSprite;
                     break;
                 default:
-                    typeSign.GetComponent<SpriteRenderer>().sprite = normalSprite;
+	                this.strategy = new NormalStrategy(mover, handController, ennemySensor);
+					typeSign.GetComponent<SpriteRenderer>().sprite = normalSprite;
                     break;
             }
         }
@@ -146,7 +147,7 @@ namespace Playmode.Ennemy
 
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
-            Debug.Log("I've lost sight of an ennemy...Yikes!!!");
+			Debug.Log("I've lost sight of an ennemy...Yikes!!!");
         }
     }
 }
