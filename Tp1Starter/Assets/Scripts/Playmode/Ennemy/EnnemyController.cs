@@ -31,6 +31,7 @@ namespace Playmode.Ennemy
         private HitSensor hitSensor;
         private HandController handController;
         private WeaponSensor weaponSensor;
+        private MedkitSensor medkitSensor;
         private MedkitSensorCollision medkitSensorCollision;
         private WeaponSensorCollision weaponSensorCollision;
 
@@ -74,6 +75,8 @@ namespace Playmode.Ennemy
             var rootTransform = transform.root;
             ennemySensor = rootTransform.GetComponentInChildren<EnnemySensor>();
             hitSensor = rootTransform.GetComponentInChildren<HitSensor>();
+            medkitSensor = rootTransform.GetComponentInChildren<MedkitSensor>();
+            
             handController = hand.GetComponent<HandController>();
             weaponSensor = rootTransform.GetComponentInChildren<WeaponSensor>();
             medkitSensorCollision = rootTransform.GetComponentInChildren<MedkitSensorCollision>();
@@ -125,7 +128,7 @@ namespace Playmode.Ennemy
             {
                 case EnnemyStrategy.Careful:
                     typeSign.GetComponent<SpriteRenderer>().sprite = carefulSprite;
-                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor);
+                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor);
                     break;
                 case EnnemyStrategy.Cowboy:
                     typeSign.GetComponent<SpriteRenderer>().sprite = cowboySprite;
