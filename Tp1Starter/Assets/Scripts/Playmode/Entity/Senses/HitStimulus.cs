@@ -26,13 +26,13 @@ namespace Playmode.Entity.Senses
 
         private void ValidateSerializeFields()
         {
-            if (bulletHitPoint < 0)
+            if (BulletDamage < 0)
                 throw new ArgumentException("Hit points can't be less than 0.");
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            other.GetComponent<Entity.Senses.HitSensor>()?.Hit(bulletHitPoint);
+            other.GetComponent<Entity.Senses.HitSensor>()?.Hit(BulletDamage);
         }
     }
 }

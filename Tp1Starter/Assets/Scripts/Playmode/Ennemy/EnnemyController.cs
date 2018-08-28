@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * 
+ * Made by Benjamin Lemelin
+ * Tampered by Charles-David Thibodeau
+ * 
+ */
+
+using System;
 using Playmode.Ennemy.BodyParts;
 using Playmode.Ennemy.Strategies;
 using Playmode.Entity.Destruction;
@@ -168,6 +175,9 @@ namespace Playmode.Ennemy
         {
             Debug.Log("Picked up the medkit!");
             health.Heal(medkit.HealthValue);
+
+            var currentMedkit = transform.root.GetComponentInChildren<MedkitController>();
+            medkit.ActivateAssociatedSpawner(medkit);
         }
 
         private void OnWeaponPickup(WeaponController weapon)
