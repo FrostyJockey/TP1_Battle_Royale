@@ -13,7 +13,6 @@ namespace Playmode.Entity.Senses
 
         public event WeaponSensorEventHandler OnWeaponSeen;
         public event WeaponSensorEventHandler OnWeaponSightLost;
-        public event WeaponSensorEventHandler OnWeaponPickup;
 
         public IEnumerable<WeaponController> WeaponsInSight => weaponsInSight;
 
@@ -53,11 +52,6 @@ namespace Playmode.Entity.Senses
         private void NotifyWeaponSightLost(WeaponController weapon)
         {
             if (OnWeaponSightLost != null) OnWeaponSightLost(weapon);
-        }
-
-        private void NotifyWeaponPickup(WeaponController weapon)
-        {
-            if (OnWeaponPickup != null) OnWeaponPickup(weapon);
         }
     }
 }

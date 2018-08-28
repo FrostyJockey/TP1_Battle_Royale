@@ -9,7 +9,7 @@ namespace Playmode.Entity.Senses
 
     public class MedkitSensorCollision : MonoBehaviour
     {
-        public event MedkitSensorEventHandler OnMedkitPickup;
+        public event MedkitSensorCollisionEventHandler OnMedkitPickup;
 
         public void Pickup(MedkitController medkit)
         {

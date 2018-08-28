@@ -12,7 +12,6 @@ namespace Playmode.Pickups
 
         [SerializeField] private int healthValue = 30;
 
-        private MedkitSensorCollision medkitSensorCollision;
         private PickupSpawnerController pickupSpawnerController;
 
         private int spawnerNumber;
@@ -34,18 +33,6 @@ namespace Playmode.Pickups
         private void Awake()
         {
             ValidateSerialisedFields();
-
-            medkitSensorCollision = GameObject.FindWithTag(Tags.Ennemy).GetComponentInChildren<MedkitSensorCollision>();
-        }
-
-        private void OnEnable()
-        {
-            medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
-        }
-
-        private void OnDisable()
-        {
-            medkitSensorCollision.OnMedkitPickup -= OnMedkitPickup;
         }
 
         private void ValidateSerialisedFields()
@@ -59,10 +46,18 @@ namespace Playmode.Pickups
             Hide(medkit);
         }
 
+        public void ActivateAssociatedSpawner(MedkitController medkit)
+        {
+            AssociatedSpawner.IsSpawnerAvailable = true;
+            Hide(medkit);
+        }
+
         private void Hide(MedkitController medkit)
         {
-            medkit.transform.root.gameObject.SetActive(false);
-            AssociatedSpawner.IsSpawnerAvailable = true;
+            var currentMedkit = medkit.transform.root.gameObject;
+
+            currentMedkit.SetActive(false);
+            currentMedkit.GetComponentInChildren<MedkitController>().AssociatedSpawner.IsSpawnerAvailable = true;
         }
 
         public void SetAssociatedSpawner(PickupSpawnerController spawner)

@@ -13,7 +13,6 @@ namespace Playmode.Entity.Senses
 
         public event MedkitSensorEventHandler OnMedkitSeen;
         public event MedkitSensorEventHandler OnMedkitSightLost;
-        public event MedkitSensorEventHandler OnMedkitPickup;
 
         public IEnumerable<MedkitController> MedkitsInSight => medkitsInSight;
 
