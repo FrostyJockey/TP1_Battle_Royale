@@ -35,15 +35,16 @@ namespace Playmode.Ennemy.BodyParts
             }
         }
 
+		/*
         public void AimTowards(GameObject target)
         {
             Vector3 distanceBetweenTargetAndMover = (target.transform.position - mover.transform.position).normalized;
             Vector3 currentDirection = mover.transform.forward;
             float angle = Vector3.Angle(distanceBetweenTargetAndMover, currentDirection);
-            
-         
-            mover.Rotate(angle);
+
+			mover.transform.parent.Rotate(0,0,angle);
         }
+		*/
 
         public void Use()
         {
