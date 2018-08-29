@@ -103,8 +103,6 @@ namespace Playmode.Ennemy
 
         private void OnEnable()
         {
-            //ennemySensor.OnEnnemySeen += OnEnnemySeen;
-            //ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             hitSensor.OnHit += OnHit;
             health.OnDeath += OnDeath;
             medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
@@ -118,8 +116,6 @@ namespace Playmode.Ennemy
 
         private void OnDisable()
         {
-            ennemySensor.OnEnnemySeen -= OnEnnemySeen;
-            ennemySensor.OnEnnemySightLost -= OnEnnemySightLost;
             hitSensor.OnHit -= OnHit;
             health.OnDeath -= OnDeath;
             medkitSensorCollision.OnMedkitPickup -= OnMedkitPickup;
