@@ -3,6 +3,7 @@ using Playmode.Movement;
 using Playmode.Entity.Senses;
 using UnityEngine;
 using Playmode.Entity.Status;
+using Playmode.Util.Values;
 using Playmode.Pickups;
 
 namespace Playmode.Ennemy.Strategies
@@ -16,7 +17,6 @@ namespace Playmode.Ennemy.Strategies
         bool trackingEnnemy;
         GameObject target;
         float innerTimer;
-        
         
 
         public CarefulStrategy(Mover mover, HandController handController, EnnemySensor ennemySensor, MedkitSensor medkitSensor)
@@ -35,24 +35,27 @@ namespace Playmode.Ennemy.Strategies
 
         public void Act()
         {
-            if (trackingEnnemy && target != null)
+            if (target != null)
             {
                 MoveToTarget(target.gameObject);
                 handController.Use();
             }
             else
             {
-                if(mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= 7.8 * 7.8) //pour gérer en même temps le haut et le bas
+                // hardcodded borders
+                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= 7.8 * 7.8) //pour gérer en même temps le haut et le bas
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
-                else if(mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= 19 * 19)
+                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= 19 * 19)
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
+
                 mover.Move(Mover.Foward);
             }
         }
+
         private void OnEnnemySeen(EnnemyController ennemy)
         {
             if (target == null)
@@ -62,6 +65,7 @@ namespace Playmode.Ennemy.Strategies
                 target.GetComponent<Health>().OnDeath += OnTargetDied;
             }
         }
+
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
            
@@ -78,37 +82,40 @@ namespace Playmode.Ennemy.Strategies
                 }
             }
         }
+
         private void OnTargetDied()
         {
             ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
         }
+
         private void OnMedkitSeen(MedkitController medkit)
         {
             target = medkit.transform.gameObject;
             trackingEnnemy = false;
         }
+
         private void OnMedkitSightLost(MedkitController medkit)
         {
-            medkitSensor.LooseSightOf(medkit);
             target = null;
         }
+
         private void MoveToTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;
 
             float distance = spaceBetweenObjects.sqrMagnitude;
-            float angle = Vector3.Angle(mover.gameObject.transform.up, spaceBetweenObjects);
+            float angle = Vector3.SignedAngle(mover.gameObject.transform.up, spaceBetweenObjects, Vector3.forward);
             if (!(trackingEnnemy && distance < 30))
             {
                 mover.Move(Mover.Foward);
             }
 
-            if (angle > 2.5)
+            if (angle < 0)
             {
 
                 mover.Rotate(Mover.Clockwise);
             }
-            else if (angle < 2.5)
+            else if (angle > 0)
             {
 
                 mover.Rotate(Mover.CounterClockwise);
