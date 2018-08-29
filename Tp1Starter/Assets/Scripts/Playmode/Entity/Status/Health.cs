@@ -38,6 +38,7 @@ namespace Playmode.Entity.Status
             HealthPoints -= hitPoints;
         }
 
+        //added
         public void Heal(int healthPoints)
         {
             HealthPoints += healthPoints;

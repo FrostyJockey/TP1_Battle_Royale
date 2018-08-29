@@ -33,10 +33,5 @@ namespace Playmode.Entity.Senses
         {
             other.GetComponent<MedkitSensor>()?.LooseSightOf(medkit);
         }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            //collision.gameObject.GetComponent<MedkitSensorCollision>()?.Pickup(medkit);
-        }
     }
 }

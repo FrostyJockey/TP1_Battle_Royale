@@ -30,5 +30,6 @@ namespace Playmode.Movement
                 (direction < 0 ? rotateSpeed : -rotateSpeed) * Time.deltaTime
             );
         }
+
     }
 }
