@@ -80,13 +80,16 @@ namespace Playmode.Ennemy
             destroyer = GetComponent<RootDestroyer>();
 
             var rootTransform = transform.root;
+
             ennemySensor = rootTransform.GetComponentInChildren<EnnemySensor>();
-            hitSensor = rootTransform.GetComponentInChildren<HitSensor>();
-            medkitSensor = rootTransform.GetComponentInChildren<MedkitSensor>();
-            
             handController = hand.GetComponent<HandController>();
-            weaponSensor = rootTransform.GetComponentInChildren<WeaponSensor>();
+
+            hitSensor = rootTransform.GetComponentInChildren<HitSensor>();
+
+            medkitSensor = rootTransform.GetComponentInChildren<MedkitSensor>();
             medkitSensorCollision = rootTransform.GetComponentInChildren<MedkitSensorCollision>();
+
+            weaponSensor = rootTransform.GetComponentInChildren<WeaponSensor>();
             weaponSensorCollision = rootTransform.GetComponentInChildren<WeaponSensorCollision>();
 
             strategy = new TurnAndShootStragegy(mover, handController);
@@ -103,8 +106,6 @@ namespace Playmode.Ennemy
 
         private void OnEnable()
         {
-            //ennemySensor.OnEnnemySeen += OnEnnemySeen;
-            //ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             hitSensor.OnHit += OnHit;
             health.OnDeath += OnDeath;
             medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
@@ -118,8 +119,6 @@ namespace Playmode.Ennemy
 
         private void OnDisable()
         {
-            ennemySensor.OnEnnemySeen -= OnEnnemySeen;
-            ennemySensor.OnEnnemySightLost -= OnEnnemySightLost;
             hitSensor.OnHit -= OnHit;
             health.OnDeath -= OnDeath;
             medkitSensorCollision.OnMedkitPickup -= OnMedkitPickup;
@@ -135,15 +134,21 @@ namespace Playmode.Ennemy
             {
                 case EnnemyStrategy.Careful:
                     typeSign.GetComponent<SpriteRenderer>().sprite = carefulSprite;
-                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor);
+                    // Think of better way for that, possibly
+                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor, medkitSensorCollision);
                     break;
+
                 case EnnemyStrategy.Cowboy:
                     typeSign.GetComponent<SpriteRenderer>().sprite = cowboySprite;
+                    // Think of better way for that, possibly
+                    this.strategy = new CowboyStrategy(mover, handController, ennemySensor, weaponSensor, weaponSensorCollision);
                     break;
+
                 case EnnemyStrategy.Camper:
                     typeSign.GetComponent<SpriteRenderer>().sprite = camperSprite;
                     this.strategy = new CamperStrategy(mover, handController, ennemySensor, medkitSensor, weaponSensor);
                     break;
+
                 default:
 	                this.strategy = new NormalStrategy(mover, handController, ennemySensor);
 					typeSign.GetComponent<SpriteRenderer>().sprite = normalSprite;
@@ -153,31 +158,16 @@ namespace Playmode.Ennemy
 
         private void OnHit(int hitPoints)
         {
-          
-
            health.Hit(hitPoints);
         }
 
         private void OnDeath()
         {
-           
-
             destroyer.Destroy();
-        }
-
-        private void OnEnnemySeen(EnnemyController ennemy)
-        {
-           
-        }
-
-        private void OnEnnemySightLost(EnnemyController ennemy)
-        {
-			Debug.Log("I've lost sight of an ennemy...Yikes!!!");
         }
 
         private void OnMedkitPickup(MedkitController medkit)
         {
-            Debug.Log("Picked up the medkit!");
             health.Heal(medkit.HealthValue);
 
             var currentMedkit = transform.root.GetComponentInChildren<MedkitController>();
@@ -186,11 +176,8 @@ namespace Playmode.Ennemy
 
         private void OnWeaponPickup(WeaponController weapon)
         {
-            Debug.Log("Picked up the " + weapon.transform.root.gameObject.name + "!");
-
             var currentWeapon = transform.root.GetComponentInChildren<WeaponController>();
             currentWeapon.AddWeaponStats(weapon);
-
         }
         public float CalculateDistanceWithTarget(GameObject targetedObject)
         {

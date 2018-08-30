@@ -4,32 +4,34 @@ using Playmode.Entity.Senses;
 using UnityEngine;
 using Playmode.Entity.Status;
 using Playmode.Util.Values;
-using Playmode.Pickups;
+using Playmode.Weapon;
 
 namespace Playmode.Ennemy.Strategies
 {
-    public class CarefulStrategy : IEnnemyStrategy
+    public class CowboyStrategy : IEnnemyStrategy
     {
         private readonly EnnemySensor ennemySensor;
         private readonly Mover mover;
         private readonly HandController handController;
-        private readonly MedkitSensor medkitSensor;
-        bool trackingEnnemy;
+        private readonly WeaponSensor weaponSensor;
+        private readonly WeaponSensorCollision weaponSensorCollision;
         GameObject target;
         float innerTimer;
         
 
-        public CarefulStrategy(Mover mover, HandController handController, EnnemySensor ennemySensor, MedkitSensor medkitSensor, MedkitSensorCollision medkitSensorCollision)
+        public CowboyStrategy
+            (Mover mover, HandController handController, EnnemySensor ennemySensor, WeaponSensor weaponSensor, WeaponSensorCollision weaponSensorCollision)
         {
             this.mover = mover;
             this.handController = handController;
             this.ennemySensor = ennemySensor;
-            this.medkitSensor = medkitSensor;
-            trackingEnnemy = false;
+            this.weaponSensor = weaponSensor;
+            this.weaponSensorCollision = weaponSensorCollision;
             ennemySensor.OnEnnemySeen += OnEnnemySeen;
             ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
-            medkitSensor.OnMedkitSeen += OnMedkitSeen;
-            medkitSensor.OnMedkitSightLost += OnMedkitSightLost;
+            weaponSensor.OnWeaponSeen += OnWeaponSeen;
+            weaponSensor.OnWeaponSightLost += OnWeaponSightLost;
+            weaponSensorCollision.OnWeaponPickup += OnWeaponPickup;
             innerTimer = 0;
         }
 
@@ -65,7 +67,6 @@ namespace Playmode.Ennemy.Strategies
             if (target == null)
             {
                 target = ennemy.gameObject;
-                trackingEnnemy = true;
                 target.GetComponent<Health>().OnDeath += OnTargetDied;
             }
         }
@@ -82,26 +83,28 @@ namespace Playmode.Ennemy.Strategies
                else
                 {
                     target = null;
-                    trackingEnnemy = false;
                 }
             }
         }
 
         private void OnTargetDied()
         {
-            
             ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
         }
 
-        private void OnMedkitSeen(MedkitController medkit)
+        private void OnWeaponSeen(WeaponController weapon)
         {
-            target = medkit.transform.gameObject;
-            trackingEnnemy = false;
+            target = weapon.transform.gameObject;
         }
 
-        private void OnMedkitSightLost(MedkitController medkit)
+        private void OnWeaponSightLost(WeaponController weapon)
         {
             target = null;
+        }
+
+        private void OnWeaponPickup(WeaponController weapon)
+        {
+            weaponSensor.LooseSightOf(weapon);
         }
 
         private void MoveToTarget(GameObject targetedObject)
@@ -110,19 +113,15 @@ namespace Playmode.Ennemy.Strategies
 
             float distance = spaceBetweenObjects.sqrMagnitude;
             float angle = Vector3.SignedAngle(mover.gameObject.transform.up, spaceBetweenObjects, Vector3.forward);
-            if (!(trackingEnnemy && distance < 30))
-            {
-                mover.Move(Mover.Foward);
-            }
+
+            mover.Move(Mover.Foward);
 
             if (angle < 0)
             {
-
                 mover.Rotate(Mover.Clockwise);
             }
             else if (angle > 0)
             {
-
                 mover.Rotate(Mover.CounterClockwise);
             }
         }
