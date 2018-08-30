@@ -12,6 +12,8 @@ namespace Playmode.Weapon
         [SerializeField] private WeaponTypes typeOfWeapon = WeaponTypes.Shotgun;
         [SerializeField]private int ShotgunPalletsAmount = 5;
 
+        private AudioSource shotFiredSound;
+
         private int spawnerNumber;
         private float lastTimeShotInSeconds;
         private PickupSpawnerController pickupSpawnerController;
@@ -59,6 +61,8 @@ namespace Playmode.Weapon
         private void InitializeComponent()
         {
             lastTimeShotInSeconds = 0;
+
+            shotFiredSound = transform.root.GetComponentInChildren<AudioSource>();
         }
 
         public void SetSpawnerNumber(int spawnerNumber)
@@ -70,6 +74,8 @@ namespace Playmode.Weapon
         {
             if (CanShoot)
             {
+                PlayAudioCueShot();
+
                 var angleSpread = 0;
 
                 if (typeOfWeapon == WeaponTypes.Shotgun)
@@ -124,6 +130,11 @@ namespace Playmode.Weapon
 
             currentWeapon.SetActive(false);
             currentWeapon.GetComponentInChildren<WeaponController>().AssociatedSpawner.IsSpawnerAvailable = true;
+        }
+
+        private void PlayAudioCueShot()
+        {
+            shotFiredSound.Play();
         }
 
         public void SetAssociatedSpawner(PickupSpawnerController spawner)
