@@ -10,6 +10,7 @@ TagManager:
   - Uzi
   - Ennemy
   - PickupSpawner
+  - Renderer
   layers:
   - Default
   - TransparentFX
@@ -44,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2506952079
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

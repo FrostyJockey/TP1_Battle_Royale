@@ -14,6 +14,10 @@ namespace Playmode.Pickups
         [SerializeField] private GameObject pickupPrefabUzi;
         [SerializeField] private float pickupSpawnDelay = 10f;
 
+        private int spawnerAvailableCount;
+
+        private int nextSpawnPoint;
+
         private void OnEnable()
         {
             StartCoroutine(PickupSpawnCoroutine());
@@ -35,15 +39,13 @@ namespace Playmode.Pickups
 
         private void SpawnRandomPickables()
         {
-            var nextPickable = (int)UnityEngine.Random.Range((float)PickupTypes.Medkit, (float)PickupTypes.Uzi+1);
+            var nextPickable = CreateRandomNumber();
 
-            var nextSpawnPoint = 0;
-
-            int spawnerAvailableCount = 0;
+            InitValues();
 
             while (true && spawnerAvailableCount < transform.childCount)
             {
-                nextSpawnPoint = UnityEngine.Random.Range(0, transform.childCount);
+                nextSpawnPoint = NextRandomSpawnpointNumber();
 
                 var spawner = CheckSpawnerAvailability(nextSpawnPoint);
 
@@ -90,6 +92,23 @@ namespace Playmode.Pickups
                 return child.GetComponent<PickupSpawnerController>();
             }
             return null;
+        }
+
+        private int CreateRandomNumber()
+        {
+            int randomNumber = (int)UnityEngine.Random.Range((float)PickupTypes.Medkit, (float)PickupTypes.Uzi + 1);
+            return randomNumber;
+        }
+
+        private int NextRandomSpawnpointNumber()
+        {
+            return UnityEngine.Random.Range(0, transform.childCount);
+        }
+
+        private void InitValues()
+        {
+            spawnerAvailableCount = 0;
+            nextSpawnPoint = 0;
         }
     }
 }

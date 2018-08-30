@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PickupSpawnerController : MonoBehaviour {
 
-    //[SerializeField] private int spawnerNumber = 0;
-
     private bool isSpawnerAvailable;
 
     public bool IsSpawnerAvailable
@@ -16,15 +14,6 @@ public class PickupSpawnerController : MonoBehaviour {
             if (isSpawnerAvailable != value)
             {
                 isSpawnerAvailable = value;
-
-                if (isSpawnerAvailable == false)
-                {
-                    Debug.Log(gameObject.name + " is NOT available!");
-                }
-                else
-                {
-                    Debug.Log(gameObject.name + " is available!");
-                }
             }
         }
     }

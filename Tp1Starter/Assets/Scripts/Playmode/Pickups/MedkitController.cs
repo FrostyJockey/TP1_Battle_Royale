@@ -9,7 +9,6 @@ namespace Playmode.Pickups
 {
     public class MedkitController : MonoBehaviour {
 
-
         [SerializeField] private int healthValue = 30;
 
         private PickupSpawnerController pickupSpawnerController;
@@ -46,18 +45,18 @@ namespace Playmode.Pickups
             Hide(medkit);
         }
 
-        public void ActivateAssociatedSpawner(MedkitController medkit)
-        {
-            AssociatedSpawner.IsSpawnerAvailable = true;
-            Hide(medkit);
-        }
-
         private void Hide(MedkitController medkit)
         {
             var currentMedkit = medkit.transform.root.gameObject;
 
             currentMedkit.SetActive(false);
             currentMedkit.GetComponentInChildren<MedkitController>().AssociatedSpawner.IsSpawnerAvailable = true;
+        }
+
+        public void ActivateAssociatedSpawner(MedkitController medkit)
+        {
+            AssociatedSpawner.IsSpawnerAvailable = true;
+            Hide(medkit);
         }
 
         public void SetAssociatedSpawner(PickupSpawnerController spawner)

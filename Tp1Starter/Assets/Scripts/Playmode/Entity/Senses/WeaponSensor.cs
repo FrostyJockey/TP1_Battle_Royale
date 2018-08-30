@@ -28,8 +28,6 @@ namespace Playmode.Entity.Senses
 
         public void See(WeaponController weapon)
         {
-            Debug.Log("I see the weapon!");
-
             weaponsInSight.Add(weapon);
 
             NotifyWeaponSeen(weapon);
@@ -37,8 +35,6 @@ namespace Playmode.Entity.Senses
 
         public void LooseSightOf(WeaponController weapon)
         {
-            Debug.Log("Where's the weapon??");
-
             weaponsInSight.Remove(weapon);
 
             NotifyWeaponSightLost(weapon);

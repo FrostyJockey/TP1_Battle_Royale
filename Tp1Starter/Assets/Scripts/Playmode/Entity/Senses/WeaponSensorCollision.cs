@@ -11,14 +11,14 @@ namespace Playmode.Entity.Senses
     {
         public event WeaponSensorEventHandler OnWeaponPickup;
 
-        public void Pickup(WeaponController weapon)
-        {
-            NotifyWeaponPickup(weapon);
-        }
-
         private void NotifyWeaponPickup(WeaponController weapon)
         {
             if (OnWeaponPickup != null) OnWeaponPickup(weapon);
+        }
+
+        public void Pickup(WeaponController weapon)
+        {
+            NotifyWeaponPickup(weapon);
         }
     }
 }

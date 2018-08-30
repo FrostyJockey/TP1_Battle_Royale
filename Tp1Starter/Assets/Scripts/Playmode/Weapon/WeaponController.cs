@@ -10,8 +10,8 @@ namespace Playmode.Weapon
         [SerializeField] private float fireDelayInSeconds = 1f;
         [SerializeField] private int weaponDamagePerBullet = 10;
         [SerializeField] private WeaponTypes typeOfWeapon = WeaponTypes.Shotgun;
+        [SerializeField]private int ShotgunPalletsAmount = 5;
 
-        private const int ShotgunPalletsAmount = 5;
         private int spawnerNumber;
         private float lastTimeShotInSeconds;
         private PickupSpawnerController pickupSpawnerController;

@@ -26,6 +26,16 @@ namespace Playmode.Entity.Senses
             medkitsInSight = new HashSet<MedkitController>();
         }
 
+        private void NotifyMedkitSeen(MedkitController medkit)
+        {
+            if (OnMedkitSeen != null) OnMedkitSeen(medkit);
+        }
+
+        private void NotifyMedkitSightLost(MedkitController medkit)
+        {
+            if (OnMedkitSightLost != null) OnMedkitSightLost(medkit);
+        }
+
         public void See(MedkitController medkit)
         {
             Debug.Log("I see the medkit!");
@@ -43,17 +53,6 @@ namespace Playmode.Entity.Senses
 
             NotifyMedkitSightLost(medkit);
         }
-
-        private void NotifyMedkitSeen(MedkitController medkit)
-        {
-            if (OnMedkitSeen != null) OnMedkitSeen(medkit);
-        }
-
-        private void NotifyMedkitSightLost(MedkitController medkit)
-        {
-            if (OnMedkitSightLost != null) OnMedkitSightLost(medkit);
-        }
-
     }
 }
 

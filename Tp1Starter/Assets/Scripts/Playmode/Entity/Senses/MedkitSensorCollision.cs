@@ -11,14 +11,14 @@ namespace Playmode.Entity.Senses
     {
         public event MedkitSensorCollisionEventHandler OnMedkitPickup;
 
-        public void Pickup(MedkitController medkit)
-        {
-            NotifyMedkitPickup(medkit);
-        }
-
         private void NotifyMedkitPickup(MedkitController medkit)
         {
             if (OnMedkitPickup != null) OnMedkitPickup(medkit);
+        }
+
+        public void Pickup(MedkitController medkit)
+        {
+            NotifyMedkitPickup(medkit);
         }
     }
 }
