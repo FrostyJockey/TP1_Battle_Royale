@@ -142,6 +142,7 @@ namespace Playmode.Ennemy
                     break;
                 case EnnemyStrategy.Camper:
                     typeSign.GetComponent<SpriteRenderer>().sprite = camperSprite;
+                    this.strategy = new CamperStrategy(mover, handController, ennemySensor, medkitSensor, weaponSensor);
                     break;
                 default:
 	                this.strategy = new NormalStrategy(mover, handController, ennemySensor);
@@ -190,6 +191,18 @@ namespace Playmode.Ennemy
             var currentWeapon = transform.root.GetComponentInChildren<WeaponController>();
             currentWeapon.AddWeaponStats(weapon);
 
+        }
+        public float CalculateDistanceWithTarget(GameObject targetedObject)
+        {
+            Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;
+            float distance = spaceBetweenObjects.sqrMagnitude;
+            return distance;
+        }
+        public float CalculateAngleWithTarget(GameObject targetedObject)
+        {
+            Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;
+            float angle = Vector3.SignedAngle(mover.gameObject.transform.up, spaceBetweenObjects, Vector3.forward);
+            return angle;
         }
     }
 }
