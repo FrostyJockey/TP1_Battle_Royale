@@ -14,6 +14,7 @@ namespace Playmode.Ennemy.Strategies
         private readonly Mover mover;
         private readonly HandController handController;
         private readonly MedkitSensor medkitSensor;
+        private readonly MedkitSensorCollision medkitSensorCollision;
         bool trackingEnnemy;
         GameObject target;
         float innerTimer;
@@ -30,6 +31,8 @@ namespace Playmode.Ennemy.Strategies
             ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             medkitSensor.OnMedkitSeen += OnMedkitSeen;
             medkitSensor.OnMedkitSightLost += OnMedkitSightLost;
+            this.medkitSensorCollision = medkitSensorCollision;
+            this.medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
             innerTimer = 0;
         }
 
@@ -103,7 +106,11 @@ namespace Playmode.Ennemy.Strategies
         {
             target = null;
         }
-
+        private void OnMedkitPickup(MedkitController medkit)
+        {
+            medkitSensor.LooseSightOf(medkit);
+           
+        }
         private void MoveToTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;

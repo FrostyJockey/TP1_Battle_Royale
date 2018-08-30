@@ -146,7 +146,7 @@ namespace Playmode.Ennemy
 
                 case EnnemyStrategy.Camper:
                     typeSign.GetComponent<SpriteRenderer>().sprite = camperSprite;
-                    this.strategy = new CamperStrategy(mover, handController, ennemySensor, medkitSensor, weaponSensor);
+                    this.strategy = new CamperStrategy(mover, handController, ennemySensor, medkitSensor, weaponSensor, medkitSensorCollision, weaponSensorCollision);
                     break;
 
                 default:

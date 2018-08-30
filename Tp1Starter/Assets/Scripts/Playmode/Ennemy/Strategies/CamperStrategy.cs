@@ -19,12 +19,14 @@ namespace Playmode.Ennemy.Strategies
         private readonly EnnemySensor ennemySensor;
         private readonly MedkitSensor medkitSensor;
         private readonly WeaponSensor weaponSensor;
+        private readonly WeaponSensorCollision weaponSensorCollision;
+        private readonly MedkitSensorCollision medkitSensorCollision;
         private GameObject target;
         private GameObject campingMedkit;
         [SerializeField] private int safetyHealthCap = 50;
         private EnnemyController ennemyController;
 
-        public CamperStrategy(Mover mover, HandController handController, EnnemySensor ennemySensor, MedkitSensor medkitSensor, WeaponSensor weaponSensor)
+        public CamperStrategy(Mover mover, HandController handController, EnnemySensor ennemySensor, MedkitSensor medkitSensor, WeaponSensor weaponSensor, MedkitSensorCollision medkitSensorCollision, WeaponSensorCollision weaponSensorCollision)
         {
             target = null;
             campingMedkit = null;
@@ -33,11 +35,15 @@ namespace Playmode.Ennemy.Strategies
             this.ennemySensor = ennemySensor;
             this.medkitSensor = medkitSensor;
             this.weaponSensor = weaponSensor;
+            this.medkitSensorCollision = medkitSensorCollision;
+            this.weaponSensorCollision = weaponSensorCollision;
             this.ennemySensor.OnEnnemySeen += OnEnnemySeen;
             this.ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             this.medkitSensor.OnMedkitSeen += OnMedkitSeen;
             this.medkitSensor.OnMedkitSightLost += OnMedkitSightLost;
             this.weaponSensor.OnWeaponSeen += OnWeaponSeen;
+            weaponSensorCollision.OnWeaponPickup += OnWeaponPickup;
+            medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
             ennemyController = mover.transform.root.GetComponentInChildren<EnnemyController>();
         }
 
@@ -126,7 +132,7 @@ namespace Playmode.Ennemy.Strategies
         private void OnMedkitSeen(MedkitController medkit)
         {
             campingMedkit = medkit.transform.gameObject;
-            
+            target = null;
         }
 
         private void OnMedkitSightLost(MedkitController medkit)
@@ -156,8 +162,21 @@ namespace Playmode.Ennemy.Strategies
         }
         private void OnWeaponSightLost(WeaponController weapon)
         {
-
+            if(target == weapon.gameObject)
+            {
+                target = null;
+            }
         }
-        
+        private void OnWeaponPickup(WeaponController weapon)
+        {
+            weaponSensor.LooseSightOf(weapon);
+            target = null;
+        }
+        private void OnMedkitPickup(MedkitController medkit)
+        {
+            medkitSensor.LooseSightOf(medkit);
+            campingMedkit = null;
+        }
+
     }
 }
