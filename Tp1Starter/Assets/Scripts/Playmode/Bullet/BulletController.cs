@@ -52,7 +52,12 @@ namespace Playmode.Bullet
             if (IsAlive)
                 mover.Move(Mover.Foward);
             else
-                destroyer.Destroy();
+                DestroyBullet();
+        }
+
+        public void DestroyBullet()
+        {
+            destroyer.Destroy();
         }
     }
 }

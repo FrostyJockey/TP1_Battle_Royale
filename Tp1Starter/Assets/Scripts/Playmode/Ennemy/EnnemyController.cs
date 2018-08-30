@@ -6,6 +6,7 @@
  */
 
 using System;
+using Playmode.Bullet;
 using Playmode.Ennemy.BodyParts;
 using Playmode.Ennemy.Strategies;
 using Playmode.Entity.Destruction;
@@ -156,9 +157,10 @@ namespace Playmode.Ennemy
             }
         }
 
-        private void OnHit(int hitPoints)
+        private void OnHit(int hitPoints, BulletController bullet)
         {
-           health.Hit(hitPoints);
+            health.Hit(hitPoints);
+            bullet.DestroyBullet();
         }
 
         private void OnDeath()
