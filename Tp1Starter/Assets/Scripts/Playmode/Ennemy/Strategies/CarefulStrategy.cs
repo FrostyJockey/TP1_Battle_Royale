@@ -89,6 +89,7 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnTargetDied()
         {
+            
             ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
         }
 

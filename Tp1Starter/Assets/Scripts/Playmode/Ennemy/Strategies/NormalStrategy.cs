@@ -11,6 +11,7 @@ using Playmode.Ennemy.Strategies;
 using UnityEngine;
 using Playmode.Ennemy.BodyParts;
 using Playmode.Entity.Senses;
+using Playmode.Entity.Status;
 using Playmode.Movement;
 
 namespace Playmode.Ennemy.Strategies
@@ -40,45 +41,80 @@ namespace Playmode.Ennemy.Strategies
 
 		public void Act()
 		{
-			if (ennemySensor.EnnemiesInSight.Any())
-				ShootTarget(ennemySensor.EnnemiesInSight.ElementAt(0));
+
+
+
+			if (currentEnnemyTarget != null)
+			{
+				float angleOffset = ComputeAngleOffsetFromEnnemy();
+
+				if (angleOffset < 0)			
+					mover.Rotate(Mover.Clockwise);				
+				else if (angleOffset > 0)
+					mover.Rotate(Mover.CounterClockwise);
+
+				ShootTarget(currentEnnemyTarget);
+			}
+
 			else
+			{
 				FindNewTargetDirection();
-		
+			}
 				
 		}
 
 		private void FindNewTargetDirection()
 		{
-
 			elaspedTimeInOneDirection += Time.deltaTime;
 			if (elaspedTimeInOneDirection >= 7)
 			{
-
 				if (elaspedTimeInOneDirection >= 12)
 				{
-					
 					elaspedTimeInOneDirection = 0;
 				}
 				mover.Rotate(Mover.Clockwise);
 			}
-			mover.Move(Mover.Foward);
+			else
+				AdvanceForward();
 		}
 
 		private void ShootTarget(EnnemyController target)
 		{
-			
+			AdvanceForward();
+			handController.Use();
+		}
+
+		private void AdvanceForward()
+		{
+			mover.Move(Mover.Foward);
+		}
+
+		private float ComputeAngleOffsetFromEnnemy()
+		{
+			Vector3 distanceBetweenEnnemies = currentEnnemyTarget.transform.position - mover.transform.position;
+			Vector3 vectorFrom = mover.gameObject.transform.up;
+			return Vector3.SignedAngle(vectorFrom, distanceBetweenEnnemies, Vector3.forward);
 		}
 
 
 		private void OnEnnemySeen(EnnemyController ennemy)
 		{
-			Debug.Log("I've seen an ennemy!! Ya so dead noob!!!");
+			if(currentEnnemyTarget == null)
+				currentEnnemyTarget = ennemy;
+			currentEnnemyTarget.GetComponent<Health>().OnDeath += OnTargetDied;
 		}
 
 		private void OnEnnemySightLost(EnnemyController ennemy)
 		{
-			Debug.Log("I've lost sight of an ennemy...Yikes!!!");
+			if (ennemySensor.EnnemiesInSight.GetEnumerator().MoveNext())	
+				currentEnnemyTarget = ennemySensor.EnnemiesInSight.GetEnumerator().Current;
+			else
+				currentEnnemyTarget = null;
+		}
+
+		private void OnTargetDied()
+		{
+			ennemySensor.LooseSightOf(currentEnnemyTarget);
 		}
 	}
 }
