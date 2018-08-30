@@ -111,7 +111,7 @@ namespace Playmode.Ennemy.Strategies
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
 
-            if (ennemy == target)
+            if (ennemy.gameObject == target)
             {
                 if (ennemySensor.EnnemiesInSight.GetEnumerator().MoveNext())
                 {
