@@ -35,16 +35,6 @@ namespace Playmode.Ennemy.BodyParts
             }
         }
 
-        public void AimTowards(GameObject target)
-        {
-            Vector3 spaceBetweenObjects = target.gameObject.transform.position - mover.gameObject.transform.position;
-            float angle = Vector3.Angle(mover.gameObject.transform.up, spaceBetweenObjects);
-
-            
-                
-           
-        }
-
         public void Use()
         {
 			if (weapon != null) weapon.Shoot();

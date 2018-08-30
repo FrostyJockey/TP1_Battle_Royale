@@ -106,9 +106,12 @@ namespace Playmode.Weapon
             {
                 case (WeaponTypes.Shotgun):
                     weaponDamagePerBullet += 2;
+                    typeOfWeapon = WeaponTypes.Shotgun;
                     break;
+
                 case (WeaponTypes.Uzi):
                     fireDelayInSeconds -= 0.1f;
+                    typeOfWeapon = WeaponTypes.Uzi;
                     break;
             }
 
