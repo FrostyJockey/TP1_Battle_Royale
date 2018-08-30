@@ -31,7 +31,10 @@ namespace Playmode.Ennemy.Strategies
             ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             medkitSensor.OnMedkitSeen += OnMedkitSeen;
             medkitSensor.OnMedkitSightLost += OnMedkitSightLost;
-            medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
+
+            this.medkitSensorCollision = medkitSensorCollision;
+            this.medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
+
             innerTimer = 0;
         }
 
@@ -105,6 +108,7 @@ namespace Playmode.Ennemy.Strategies
         {
             target = null;
         }
+
 
         private void OnMedkitPickup(MedkitController medkit)
         {

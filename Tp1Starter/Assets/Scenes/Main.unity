@@ -152,9 +152,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1399810628277264, guid: 5b3563603dcbbce449eb771ff30aba92, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 82092448063169168, guid: 5b3563603dcbbce449eb771ff30aba92,
+        type: 2}
+      propertyPath: MaxDistance
+      value: 459.86
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b3563603dcbbce449eb771ff30aba92, type: 2}

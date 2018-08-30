@@ -150,11 +150,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4400638406319482, guid: 88e89628113b2b04eb2c08e350ffdee9, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1815521992430954, guid: 88e89628113b2b04eb2c08e350ffdee9, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114771647671017566, guid: 88e89628113b2b04eb2c08e350ffdee9,
+        type: 2}
+      propertyPath: healthPoints
+      value: 100000000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88e89628113b2b04eb2c08e350ffdee9, type: 2}
@@ -196,7 +201,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4784210902499828, guid: 32e24a69b99f316419cfc8fdb5444541, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1739067535234724, guid: 32e24a69b99f316419cfc8fdb5444541, type: 2}
       propertyPath: m_IsActive
@@ -558,7 +563,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1534373567
 GameObject:
@@ -733,7 +738,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4276974915537950, guid: 86b7192527affc247bae85bd3d2811b3, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1519248085383742, guid: 86b7192527affc247bae85bd3d2811b3, type: 2}
       propertyPath: m_IsActive
@@ -863,7 +868,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4953913046847062, guid: d3527b34c4bef3849a44772218d1c379, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1810445562942746, guid: d3527b34c4bef3849a44772218d1c379, type: 2}
       propertyPath: m_IsActive
@@ -971,7 +976,7 @@ Transform:
   - {fileID: 1346711389}
   - {fileID: 1925940844}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2086517992 stripped
 GameObject:
