@@ -83,7 +83,7 @@ namespace Playmode.Ennemy.Strategies
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
            
-            if (ennemy.gameObject == target || target == null)
+            if (target == null || ennemy.gameObject == target)
             {
                 target = FindNextTarget();
             }
@@ -108,7 +108,7 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnWeaponSightLost(WeaponController weapon)
         {
-            target = null;
+            target = FindNextTarget();
         }
 
         private void OnWeaponPickup(WeaponController weapon)

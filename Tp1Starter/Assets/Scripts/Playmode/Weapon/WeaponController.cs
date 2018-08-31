@@ -111,7 +111,7 @@ namespace Playmode.Weapon
             switch (weapon.TypeOfWeapon)
             {
                 case (WeaponTypes.Shotgun):
-                    weaponDamagePerBullet += 2;
+                    weaponDamagePerBullet += 7;
                     typeOfWeapon = WeaponTypes.Shotgun;
                     break;
 
