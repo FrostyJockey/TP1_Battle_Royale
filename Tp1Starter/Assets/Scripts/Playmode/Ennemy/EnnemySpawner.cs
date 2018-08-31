@@ -48,13 +48,13 @@ namespace Playmode.Ennemy
 
         private void SpawnEnnemies()
         {
-            var stragegyProvider = new LoopingEnumerator<EnnemyStrategy>(DefaultStrategies);
+            //var stragegyProvider = new LoopingEnumerator<EnnemyStrategy>(DefaultStrategies);
             var colorProvider = new LoopingEnumerator<Color>(colors);
 
             for (var i = 0; i < transform.childCount; i++)
                 SpawnEnnemy(
                     transform.GetChild(i).position,
-                    stragegyProvider.Next(),
+                    DefaultStrategies[UnityEngine.Random.Range(0, DefaultStrategies.Length)],
                     colorProvider.Next()
                 );
         }
