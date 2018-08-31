@@ -66,12 +66,11 @@ namespace Playmode.Ennemy.Strategies
             }
             else
             {
-                // hardcodded borders
-                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= 7.8 * 7.8) //pour gérer en même temps le haut et le bas
+                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height / 2)
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
-                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= 19 * 19)
+                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width / 2)
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
@@ -103,7 +102,7 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
-            if (ennemy.gameObject == target)
+            if (ennemy.gameObject == target || target == null)
             {
                 target = FindNextTarget();
             }
@@ -159,7 +158,10 @@ namespace Playmode.Ennemy.Strategies
             }
             else
             {
-                mover.Move(Mover.Backward);
+                if (!(mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width / 2 || mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height / 2))
+                {
+                    mover.Move(Mover.Backward);
+                }
             }
         }
 

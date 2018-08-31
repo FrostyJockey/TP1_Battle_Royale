@@ -48,12 +48,11 @@ namespace Playmode.Ennemy.Strategies
             }
             else
             {
-                // hardcodded borders
-                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= 7.8 * 7.8) //pour gérer en même temps le haut et le bas
+                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height/2)
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
-                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= 19 * 19)
+                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width /2)
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
@@ -84,7 +83,7 @@ namespace Playmode.Ennemy.Strategies
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
            
-            if (ennemy.gameObject == target)
+            if (ennemy.gameObject == target || target == null)
             {
                 target = FindNextTarget();
             }
@@ -109,8 +108,7 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnWeaponSightLost(WeaponController weapon)
         {
-            target = FindNextTarget();
-
+            target = null;
         }
 
         private void OnWeaponPickup(WeaponController weapon)
@@ -125,7 +123,10 @@ namespace Playmode.Ennemy.Strategies
             float distance = spaceBetweenObjects.sqrMagnitude;
             float angle = Vector3.SignedAngle(mover.gameObject.transform.up, spaceBetweenObjects, Vector3.forward);
 
-            mover.Move(Mover.Foward);
+            if (!(targetedObject.transform.root.CompareTag(Tags.Ennemy) && distance < 10))
+            {
+                mover.Move(Mover.Foward);
+            }
 
             if (angle < 0)
             {
