@@ -196,9 +196,5 @@ namespace Playmode.Ennemy
             float angle = Vector3.SignedAngle(mover.gameObject.transform.up, spaceBetweenObjects, Vector3.forward);
             return angle;
         }
-	    public float MinimalDistanceBeforeCollision(GameObject targetedObject)
-	    {
-		    return (targetedObject.transform.root.GetComponentInChildren<CircleCollider2D>().radius + mover.transform.root.GetComponentInChildren<CircleCollider2D>().radius)*10 ;
-	    }
 	}
 }

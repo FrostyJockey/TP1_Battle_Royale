@@ -76,7 +76,7 @@ namespace Playmode.Ennemy.Strategies
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
            
-            if (ennemy.gameObject == target)
+            if (ennemy.gameObject == target || target == null)
             {
                 target = FindNextTarget();
             }
@@ -101,8 +101,7 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnWeaponSightLost(WeaponController weapon)
         {
-            target = FindNextTarget();
-
+            target = null;
         }
 
         private void OnWeaponPickup(WeaponController weapon)
@@ -117,7 +116,10 @@ namespace Playmode.Ennemy.Strategies
             float distance = spaceBetweenObjects.sqrMagnitude;
             float angle = Vector3.SignedAngle(mover.gameObject.transform.up, spaceBetweenObjects, Vector3.forward);
 
-            mover.Move(Mover.Foward);
+            if (!(targetedObject.transform.root.CompareTag(Tags.Ennemy) && distance < 10))
+            {
+                mover.Move(Mover.Foward);
+            }
 
             if (angle < 0)
             {
