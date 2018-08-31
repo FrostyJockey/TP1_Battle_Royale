@@ -1,13 +1,4 @@
 ﻿
-/*
- *  Made by Mika Gauthier
- */
-
-
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Playmode.Ennemy.Strategies;
 using UnityEngine;
 using Playmode.Ennemy.BodyParts;
 using Playmode.Entity.Senses;
@@ -23,6 +14,7 @@ namespace Playmode.Ennemy.Strategies
 		private readonly HandController handController;
 		private readonly EnnemySensor ennemySensor;
 		private EnnemyController currentEnnemyTarget;
+		private EnnemyController ennemyController;
 		private float elaspedTimeInOneDirection = 0f;
 		
 
@@ -34,6 +26,8 @@ namespace Playmode.Ennemy.Strategies
 			this.ennemySensor = ennemySensor;
 			this.currentEnnemyTarget = null;
 
+			this.ennemyController = mover.GetComponent<EnnemyController>();
+
 			this.ennemySensor.OnEnnemySeen += OnEnnemySeen;
 			this.ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
 		}
@@ -41,19 +35,16 @@ namespace Playmode.Ennemy.Strategies
 
 		public void Act()
 		{
-
-
-
 			if (currentEnnemyTarget != null)
 			{
-				float angleOffset = ComputeAngleOffsetFromEnnemy();
+				float angleOffset = ennemyController.CalculateAngleWithTarget(currentEnnemyTarget.gameObject);
 
 				if (angleOffset < 0)			
 					mover.Rotate(Mover.Clockwise);				
 				else if (angleOffset > 0)
 					mover.Rotate(Mover.CounterClockwise);
 
-				ShootTarget(currentEnnemyTarget);
+				ShootTarget();
 			}
 
 			else
@@ -67,8 +58,7 @@ namespace Playmode.Ennemy.Strategies
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
-            }
-				
+            }	
 		}
 
 		private void FindNewTargetDirection()
@@ -86,9 +76,13 @@ namespace Playmode.Ennemy.Strategies
 				AdvanceForward();
 		}
 
-		private void ShootTarget(EnnemyController target)
+		private void ShootTarget()
 		{
-			AdvanceForward();
+			if (ennemyController.CalculateDistanceWithTarget(currentEnnemyTarget.gameObject) > ennemyController.MinimalDistanceBeforeCollision(currentEnnemyTarget.gameObject))
+			{
+				AdvanceForward();				
+			}
+
 			handController.Use();
 		}
 
@@ -96,14 +90,6 @@ namespace Playmode.Ennemy.Strategies
 		{
 			mover.Move(Mover.Foward);
 		}
-
-		private float ComputeAngleOffsetFromEnnemy()
-		{
-			Vector3 distanceBetweenEnnemies = currentEnnemyTarget.transform.position - mover.transform.position;
-			Vector3 vectorFrom = mover.gameObject.transform.up;
-			return Vector3.SignedAngle(vectorFrom, distanceBetweenEnnemies, Vector3.forward);
-		}
-
 
 		private void OnEnnemySeen(EnnemyController ennemy)
 		{
