@@ -30,6 +30,7 @@ namespace Playmode.Ennemy
         [SerializeField] private Sprite cowboySprite;
         [SerializeField] private Sprite camperSprite;
         [Header("Behaviour")] [SerializeField] private GameObject startingWeaponPrefab;
+		
 
 
         private Health health;
@@ -198,7 +199,7 @@ namespace Playmode.Ennemy
         }
 	    public float MinimalDistanceBeforeCollision(GameObject targetedObject)
 	    {
-		    return (targetedObject.transform.root.GetComponentInChildren<CircleCollider2D>().radius + mover.transform.root.GetComponentInChildren<CircleCollider2D>().radius)*10 ;
+		    return (targetedObject.transform.root.GetComponentInChildren<CircleCollider2D>().radius + mover.transform.root.GetComponentInChildren<CircleCollider2D>().radius) *10 ;
 	    }
 	}
 }
