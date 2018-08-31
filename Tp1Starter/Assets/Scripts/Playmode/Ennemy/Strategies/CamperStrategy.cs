@@ -99,6 +99,17 @@ namespace Playmode.Ennemy.Strategies
             }
 
         }
+
+        private void OnDestroy()
+        {
+            ennemySensor.OnEnnemySeen -= OnEnnemySeen;
+            ennemySensor.OnEnnemySightLost -= OnEnnemySightLost;
+            weaponSensor.OnWeaponSeen -= OnWeaponSeen;
+            weaponSensor.OnWeaponSightLost -= OnWeaponSightLost;
+            weaponSensorCollision.OnWeaponPickup -= OnWeaponPickup;
+            target.GetComponent<Health>().OnDeath -= OnTargetDied;
+        }
+
         private void OnEnnemySeen(EnnemyController ennemy)
         {
             if (target == null)
@@ -113,20 +124,16 @@ namespace Playmode.Ennemy.Strategies
 
             if (ennemy.gameObject == target)
             {
-                if (ennemySensor.EnnemiesInSight.GetEnumerator().MoveNext())
-                {
-                    target = ennemySensor.EnnemiesInSight.GetEnumerator().Current.gameObject;
-                }
-                else
-                {
-                    target = null;
-                }
+                target = FindNextTarget();
             }
         }
 
         private void OnTargetDied()
         {
-            ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            if (target != null)
+            {
+                ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            }
         }
 
         private void OnMedkitSeen(MedkitController medkit)
@@ -137,7 +144,10 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnMedkitSightLost(MedkitController medkit)
         {
-              
+              if (target == medkit.gameObject)
+              {
+                target = null;
+              }
         }
 
         private void AimTowardsTarget(GameObject targetedObject)
@@ -153,6 +163,7 @@ namespace Playmode.Ennemy.Strategies
                 mover.Rotate(Mover.CounterClockwise);
             }
         }
+
         private void OnWeaponSeen(WeaponController weapon)
         {
             if (campingMedkit == null)
@@ -160,6 +171,7 @@ namespace Playmode.Ennemy.Strategies
                 target = weapon.gameObject;
             }
         }
+
         private void OnWeaponSightLost(WeaponController weapon)
         {
             if(target == weapon.gameObject)
@@ -167,16 +179,34 @@ namespace Playmode.Ennemy.Strategies
                 target = null;
             }
         }
+
         private void OnWeaponPickup(WeaponController weapon)
         {
             weaponSensor.LooseSightOf(weapon);
             target = null;
         }
+
         private void OnMedkitPickup(MedkitController medkit)
         {
             medkitSensor.LooseSightOf(medkit);
             campingMedkit = null;
         }
 
+        private GameObject FindNextTarget()
+        {
+            GameObject nextTarget = null;
+
+            var ennemiesInSight = ennemySensor.EnnemiesInSight;
+
+            foreach (EnnemyController ennemy in ennemiesInSight)
+            {
+                if (ennemy != null)
+                {
+                    nextTarget = ennemy.gameObject;
+                }
+            }
+
+            return nextTarget;
+        }
     }
 }

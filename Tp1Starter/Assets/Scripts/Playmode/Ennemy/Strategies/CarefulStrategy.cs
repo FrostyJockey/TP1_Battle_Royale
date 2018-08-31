@@ -51,6 +51,10 @@ namespace Playmode.Ennemy.Strategies
                     TrackTarget(target);
                     handController.Use();
                 }
+                else
+                {
+                    mover.Move(Mover.Foward);
+                }
             }
             else
             {
@@ -68,8 +72,19 @@ namespace Playmode.Ennemy.Strategies
             }
         }
 
+        private void OnDestroy()
+        {
+            ennemySensor.OnEnnemySeen -= OnEnnemySeen;
+            ennemySensor.OnEnnemySightLost -= OnEnnemySightLost;
+            //weaponSensor.OnWeaponSeen -= OnWeaponSeen;
+            //weaponSensor.OnWeaponSightLost -= OnWeaponSightLost;
+            //weaponSensorCollision.OnWeaponPickup -= OnWeaponPickup;
+            target.GetComponent<Health>().OnDeath -= OnTargetDied;
+        }
+
         private void OnEnnemySeen(EnnemyController ennemy)
         {
+            Debug.Log("Found "+ ennemy.transform.root.name +"");
             if (target == null)
             {
                 target = ennemy.gameObject;
@@ -80,16 +95,18 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
-           
             if (ennemy.gameObject == target)
             {
-                target = ennemySensor.EnnemiesInSight.GetEnumerator().Current.gameObject;     
+                target = FindNextTarget();
             }
         }
 
         private void OnTargetDied()
         {
-            ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            if (target != null)
+            {
+                ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            }
         }
 
         private void OnMedkitSeen(MedkitController medkit)
@@ -120,6 +137,7 @@ namespace Playmode.Ennemy.Strategies
                 mover.Rotate(Mover.CounterClockwise);
             }
         }
+
         private void TrackTarget(GameObject targetedObject)
         {
             float distance = ennemyController.CalculateDistanceWithTarget(targetedObject);
@@ -131,6 +149,23 @@ namespace Playmode.Ennemy.Strategies
             {
                 mover.Move(Mover.Backward);
             }
+        }
+
+        private GameObject FindNextTarget()
+        {
+            GameObject nextTarget = null;
+
+            var ennemiesInSight = ennemySensor.EnnemiesInSight;
+
+            foreach (EnnemyController ennemy in ennemiesInSight)
+            {
+                if (ennemy != null)
+                {
+                    nextTarget = ennemy.gameObject;
+                }
+            }
+
+            return nextTarget;
         }
     }
 }

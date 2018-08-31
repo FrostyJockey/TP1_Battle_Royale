@@ -181,12 +181,14 @@ namespace Playmode.Ennemy
             var currentWeapon = transform.root.GetComponentInChildren<WeaponController>();
             currentWeapon.AddWeaponStats(weapon);
         }
+
         public float CalculateDistanceWithTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;
             float distance = spaceBetweenObjects.sqrMagnitude;
             return distance;
         }
+
         public float CalculateAngleWithTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;
