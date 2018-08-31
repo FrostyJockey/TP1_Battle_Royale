@@ -51,12 +51,12 @@ namespace Playmode.Ennemy.Strategies
         {
             int currentHealth = mover.gameObject.GetComponent<Health>().HealthPoints;
 
-            if (currentHealth <= 50 && campingMedkit != null)
+            if (currentHealth <= 30 && campingMedkit != null)
             {
                 AimTowardsTarget(campingMedkit);
                 mover.Move(Mover.Foward);
             }
-            else if (currentHealth >= 50 && campingMedkit != null)
+            else if (currentHealth >= 30 && campingMedkit != null)
             {
                 if (ennemyController.CalculateDistanceWithTarget(campingMedkit) > 15)
                 {
