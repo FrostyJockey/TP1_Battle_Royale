@@ -103,7 +103,7 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnEnnemySightLost(EnnemyController ennemy)
         {
-            if (ennemy.gameObject == target)
+            if (ennemy.gameObject == target || target == null)
             {
                 target = FindNextTarget();
             }
