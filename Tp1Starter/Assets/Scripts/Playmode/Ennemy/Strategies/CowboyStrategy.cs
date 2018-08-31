@@ -96,6 +96,10 @@ namespace Playmode.Ennemy.Strategies
             {
                 ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
             }
+            else
+            {
+                target = FindNextTarget();
+            }
         }
 
         private void OnWeaponSeen(WeaponController weapon)
@@ -105,7 +109,8 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnWeaponSightLost(WeaponController weapon)
         {
-            target = null;
+            target = FindNextTarget();
+
         }
 
         private void OnWeaponPickup(WeaponController weapon)

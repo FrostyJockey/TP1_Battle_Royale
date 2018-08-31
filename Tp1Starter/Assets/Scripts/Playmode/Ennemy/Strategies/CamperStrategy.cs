@@ -71,12 +71,15 @@ namespace Playmode.Ennemy.Strategies
                     }
                     else
                     {
-                        AimTowardsTarget(target);
-                        handController.Use();
                         if (target.GetComponentInChildren<EnnemyController>().CalculateDistanceWithTarget(campingMedkit) <= 50)
                         {
                             AimTowardsTarget(campingMedkit);
                             mover.Move(Mover.Foward);
+                        }
+                        else
+                        {
+                            AimTowardsTarget(target);
+                            handController.Use();
                         }
                     }
                 }
@@ -133,6 +136,10 @@ namespace Playmode.Ennemy.Strategies
             if (target != null)
             {
                 ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            }
+            else
+            {
+                target = FindNextTarget();
             }
         }
 

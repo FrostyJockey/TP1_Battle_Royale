@@ -5,6 +5,7 @@ using UnityEngine;
 using Playmode.Entity.Status;
 using Playmode.Util.Values;
 using Playmode.Pickups;
+using Playmode.Weapon;
 
 namespace Playmode.Ennemy.Strategies
 {
@@ -15,24 +16,31 @@ namespace Playmode.Ennemy.Strategies
         private readonly HandController handController;
         private readonly MedkitSensor medkitSensor;
         private readonly MedkitSensorCollision medkitSensorCollision;
+        private readonly WeaponSensor weaponSensor;
+        private readonly WeaponSensorCollision weaponSensorCollision;
         private readonly EnnemyController ennemyController;
         bool trackingEnnemy;
         GameObject target;
         float innerTimer;
         
 
-        public CarefulStrategy(Mover mover, HandController handController, EnnemySensor ennemySensor, MedkitSensor medkitSensor, MedkitSensorCollision medkitSensorCollision)
+        public CarefulStrategy(Mover mover, HandController handController, EnnemySensor ennemySensor, MedkitSensor medkitSensor, MedkitSensorCollision medkitSensorCollision, WeaponSensor weaponSensor, WeaponSensorCollision weaponSensorCollision)
         {
             ennemyController = mover.transform.root.GetComponentInChildren<EnnemyController>();
             this.mover = mover;
             this.handController = handController;
             this.ennemySensor = ennemySensor;
             this.medkitSensor = medkitSensor;
+            this.weaponSensor = weaponSensor;
+            this.weaponSensorCollision = weaponSensorCollision;
             trackingEnnemy = false;
             ennemySensor.OnEnnemySeen += OnEnnemySeen;
             ennemySensor.OnEnnemySightLost += OnEnnemySightLost;
             medkitSensor.OnMedkitSeen += OnMedkitSeen;
             medkitSensor.OnMedkitSightLost += OnMedkitSightLost;
+            weaponSensor.OnWeaponSeen += OnWeaponSeen;
+            weaponSensor.OnWeaponSightLost += OnWeaponSightLost;
+            weaponSensorCollision.OnWeaponPickup += OnWeaponPickup;
 
             this.medkitSensorCollision = medkitSensorCollision;
             this.medkitSensorCollision.OnMedkitPickup += OnMedkitPickup;
@@ -48,7 +56,7 @@ namespace Playmode.Ennemy.Strategies
 
                 if (target.transform.root.CompareTag(Tags.Ennemy))
                 {
-                    TrackTarget(target);
+                    TrackEnnemy(target);
                     handController.Use();
                 }
                 else
@@ -85,7 +93,7 @@ namespace Playmode.Ennemy.Strategies
         private void OnEnnemySeen(EnnemyController ennemy)
         {
             Debug.Log("Found "+ ennemy.transform.root.name +"");
-            if (target == null)
+            if (target == null || (target.transform.root.CompareTag(Tags.Shotgun) || target.transform.root.CompareTag(Tags.Uzi)))
             {
                 target = ennemy.gameObject;
                 trackingEnnemy = true;
@@ -106,6 +114,10 @@ namespace Playmode.Ennemy.Strategies
             if (target != null)
             {
                 ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            }
+            else
+            {
+                target = FindNextTarget();
             }
         }
 
@@ -138,7 +150,7 @@ namespace Playmode.Ennemy.Strategies
             }
         }
 
-        private void TrackTarget(GameObject targetedObject)
+        private void TrackEnnemy(GameObject targetedObject)
         {
             float distance = ennemyController.CalculateDistanceWithTarget(targetedObject);
             if (distance > 30)
@@ -166,6 +178,30 @@ namespace Playmode.Ennemy.Strategies
             }
 
             return nextTarget;
+        }
+        private void OnWeaponSeen(WeaponController weapon)
+        {
+            if (target != null)
+            {
+                if (!(target.transform.root.CompareTag(Tags.Ennemy) || target.transform.root.CompareTag(Tags.Medkit)))
+                {
+                    target = weapon.gameObject;
+                }
+            }
+            else
+            {
+                target = weapon.gameObject;
+            }
+        }
+
+        private void OnWeaponSightLost(WeaponController weapon)
+        {
+            target = FindNextTarget();
+        }
+
+        private void OnWeaponPickup(WeaponController weapon)
+        {
+            weaponSensor.LooseSightOf(weapon);
         }
     }
 }

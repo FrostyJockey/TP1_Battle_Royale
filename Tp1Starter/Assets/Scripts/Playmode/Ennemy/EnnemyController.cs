@@ -136,7 +136,7 @@ namespace Playmode.Ennemy
                 case EnnemyStrategy.Careful:
                     typeSign.GetComponent<SpriteRenderer>().sprite = carefulSprite;
                     // Think of better way for that, possibly
-                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor, medkitSensorCollision);
+                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor, medkitSensorCollision, weaponSensor, weaponSensorCollision);
                     break;
 
                 case EnnemyStrategy.Cowboy:
