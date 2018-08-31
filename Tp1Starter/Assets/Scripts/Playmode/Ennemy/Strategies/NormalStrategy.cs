@@ -16,6 +16,9 @@ namespace Playmode.Ennemy.Strategies
 		private EnnemyController currentEnnemyTarget;
 		private EnnemyController ennemyController;
 		private float elaspedTimeInOneDirection = 0f;
+        [SerializeField] private float walkingTime = 5;
+        [SerializeField] private float rotatingTime = 3.5f;
+        [SerializeField] private float minimumDistanceBetweenEnnemies = 10;
 		
 
 
@@ -50,11 +53,11 @@ namespace Playmode.Ennemy.Strategies
 			else
 			{
 				FindNewTargetDirection();
-                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= 7.8 * 7.8) //pour gérer en même temps le haut et le bas
+                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height / 2)
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
-                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= 19 * 19)
+                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width / 2)
                 {
                     mover.Rotate(Mover.Clockwise);
                 }
@@ -71,9 +74,9 @@ namespace Playmode.Ennemy.Strategies
         private void FindNewTargetDirection()
 		{
 			elaspedTimeInOneDirection += Time.deltaTime;
-			if (elaspedTimeInOneDirection >= 7)
+			if (elaspedTimeInOneDirection >= walkingTime)
 			{
-				if (elaspedTimeInOneDirection >= 12)
+				if (elaspedTimeInOneDirection >= walkingTime + rotatingTime)
 				{
 					elaspedTimeInOneDirection = 0;
 				}
@@ -85,7 +88,7 @@ namespace Playmode.Ennemy.Strategies
 
 		private void ShootTarget()
 		{
-			if (ennemyController.CalculateDistanceWithTarget(currentEnnemyTarget.gameObject) > ennemyController.MinimalDistanceBeforeCollision(currentEnnemyTarget.gameObject))
+			if (ennemyController.CalculateDistanceWithTarget(currentEnnemyTarget.gameObject) > minimumDistanceBetweenEnnemies)
 			{
 				AdvanceForward();				
 			}
