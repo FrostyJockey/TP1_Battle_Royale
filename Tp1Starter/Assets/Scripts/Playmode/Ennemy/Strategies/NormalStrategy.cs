@@ -49,15 +49,9 @@ namespace Playmode.Ennemy.Strategies
 
 			else
 			{
+                RotateFromBorders();
+
 				FindNewTargetDirection();
-                if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= 7.8 * 7.8) //pour gérer en même temps le haut et le bas
-                {
-                    mover.Rotate(Mover.Clockwise);
-                }
-                else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= 19 * 19)
-                {
-                    mover.Rotate(Mover.Clockwise);
-                }
             }	
 		}
 
@@ -136,6 +130,18 @@ namespace Playmode.Ennemy.Strategies
             }
 
             return nextTarget;
+        }
+
+        private void RotateFromBorders()
+        {
+            if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height / 2) //pour gérer en même temps le haut et le bas
+            {
+                mover.Rotate(Mover.Clockwise);
+            }
+            else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width / 2)
+            {
+                mover.Rotate(Mover.Clockwise);
+            }
         }
     }
 }
