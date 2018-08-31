@@ -61,7 +61,14 @@ namespace Playmode.Ennemy.Strategies
             }	
 		}
 
-		private void FindNewTargetDirection()
+        private void OnDestroy()
+        {
+            ennemySensor.OnEnnemySeen -= OnEnnemySeen;
+            ennemySensor.OnEnnemySightLost -= OnEnnemySightLost;
+            currentEnnemyTarget.GetComponent<Health>().OnDeath -= OnTargetDied;
+        }
+
+        private void FindNewTargetDirection()
 		{
 			elaspedTimeInOneDirection += Time.deltaTime;
 			if (elaspedTimeInOneDirection >= 7)
@@ -100,17 +107,37 @@ namespace Playmode.Ennemy.Strategies
 
 		private void OnEnnemySightLost(EnnemyController ennemy)
 		{
-			if (ennemySensor.EnnemiesInSight.GetEnumerator().MoveNext())	
-				currentEnnemyTarget = ennemySensor.EnnemiesInSight.GetEnumerator().Current;
-			else
-				currentEnnemyTarget = null;
+            if (ennemy.gameObject == currentEnnemyTarget)
+            {
+                currentEnnemyTarget = FindNextTargetEnnemy();
+            }
 		}
 
 		private void OnTargetDied()
 		{
-			ennemySensor.LooseSightOf(currentEnnemyTarget);
-		}
-	}
+            if (currentEnnemyTarget != null)
+            {
+                ennemySensor.LooseSightOf(currentEnnemyTarget);
+            }
+        }
+
+        private EnnemyController FindNextTargetEnnemy()
+        {
+            EnnemyController nextTarget = null;
+
+            var ennemiesInSight = ennemySensor.EnnemiesInSight;
+
+            foreach (EnnemyController ennemy in ennemiesInSight)
+            {
+                if (ennemy != null)
+                {
+                    nextTarget = ennemy;
+                }
+            }
+
+            return nextTarget;
+        }
+    }
 }
 
 

@@ -62,6 +62,16 @@ namespace Playmode.Ennemy.Strategies
             }
         }
 
+        private void OnDestroy()
+        {
+            ennemySensor.OnEnnemySeen -= OnEnnemySeen;
+            ennemySensor.OnEnnemySightLost -= OnEnnemySightLost;
+            weaponSensor.OnWeaponSeen -= OnWeaponSeen;
+            weaponSensor.OnWeaponSightLost -= OnWeaponSightLost;
+            weaponSensorCollision.OnWeaponPickup -= OnWeaponPickup;
+            target.GetComponent<Health>().OnDeath -= OnTargetDied;
+        }
+
         private void OnEnnemySeen(EnnemyController ennemy)
         {
             if (target == null)
@@ -76,20 +86,20 @@ namespace Playmode.Ennemy.Strategies
            
             if (ennemy.gameObject == target)
             {
-               if(ennemySensor.EnnemiesInSight.GetEnumerator().Current != null)
-                {
-                    target = ennemySensor.EnnemiesInSight.GetEnumerator().Current.gameObject;
-                }
-               else
-                {
-                    target = null;
-                }
+                target = FindNextTarget();
             }
         }
 
         private void OnTargetDied()
         {
-            ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            if (target != null)
+            {
+                ennemySensor.LooseSightOf(target.GetComponent<EnnemyController>());
+            }
+            else
+            {
+                target = FindNextTarget();
+            }
         }
 
         private void OnWeaponSeen(WeaponController weapon)
@@ -99,7 +109,8 @@ namespace Playmode.Ennemy.Strategies
 
         private void OnWeaponSightLost(WeaponController weapon)
         {
-            target = null;
+            target = FindNextTarget();
+
         }
 
         private void OnWeaponPickup(WeaponController weapon)
@@ -124,6 +135,23 @@ namespace Playmode.Ennemy.Strategies
             {
                 mover.Rotate(Mover.CounterClockwise);
             }
+        }
+
+        private GameObject FindNextTarget()
+        {
+            GameObject nextTarget = null;
+
+            var ennemiesInSight = ennemySensor.EnnemiesInSight;
+
+            foreach (EnnemyController ennemy in ennemiesInSight)
+            {
+                if (ennemy != null)
+                {
+                    nextTarget = ennemy.gameObject;
+                }
+            }
+
+            return nextTarget;
         }
     }
 }

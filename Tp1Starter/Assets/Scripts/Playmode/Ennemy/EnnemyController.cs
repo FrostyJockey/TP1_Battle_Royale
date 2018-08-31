@@ -136,7 +136,7 @@ namespace Playmode.Ennemy
                 case EnnemyStrategy.Careful:
                     typeSign.GetComponent<SpriteRenderer>().sprite = carefulSprite;
                     // Think of better way for that, possibly
-                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor, medkitSensorCollision);
+                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor, medkitSensorCollision, weaponSensor, weaponSensorCollision);
                     break;
 
                 case EnnemyStrategy.Cowboy:
@@ -181,6 +181,7 @@ namespace Playmode.Ennemy
             var currentWeapon = transform.root.GetComponentInChildren<WeaponController>();
             currentWeapon.AddWeaponStats(weapon);
         }
+
         public float CalculateDistanceWithTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;
@@ -188,6 +189,7 @@ namespace Playmode.Ennemy
 			Debug.Log(distance);
             return distance;
         }
+
         public float CalculateAngleWithTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;

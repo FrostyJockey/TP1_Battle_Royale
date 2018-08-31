@@ -116,7 +116,7 @@ namespace Playmode.Weapon
                     break;
 
                 case (WeaponTypes.Uzi):
-                    fireDelayInSeconds -= 0.1f;
+                    fireDelayInSeconds -= 0.3f;
                     typeOfWeapon = WeaponTypes.Uzi;
                     break;
             }
