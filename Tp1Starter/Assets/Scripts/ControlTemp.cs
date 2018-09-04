@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
 public class ControlTemp : MonoBehaviour {
 
 	// Use this for initialization
@@ -23,3 +25,5 @@ public class ControlTemp : MonoBehaviour {
             transform.Translate(Vector3.right * 0.2f);
     }
 }
+
+#endif

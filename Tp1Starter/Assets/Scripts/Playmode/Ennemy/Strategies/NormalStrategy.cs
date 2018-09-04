@@ -7,6 +7,8 @@ using Playmode.Movement;
 
 namespace Playmode.Ennemy.Strategies
 {
+
+    //TODO : Create base class.
 	public class NormalStrategy : IEnnemyStrategy
 	{
 
@@ -42,10 +44,7 @@ namespace Playmode.Ennemy.Strategies
 			{
 				float angleOffset = ennemyController.CalculateAngleWithTarget(currentEnnemyTarget.gameObject);
 
-				if (angleOffset < 0)			
-					mover.Rotate(Mover.Clockwise);				
-				else if (angleOffset > 0)
-					mover.Rotate(Mover.CounterClockwise);
+                mover.Rotate(angleOffset < 0 ? Mover.Clockwise : Mover.CounterClockwise);
 
 				ShootTarget();
 			}
@@ -81,16 +80,21 @@ namespace Playmode.Ennemy.Strategies
 		}
 
 		private void ShootTarget()
-		{
-			if (ennemyController.CalculateDistanceWithTarget(currentEnnemyTarget.gameObject) > minimumDistanceBetweenEnnemies)
-			{
-				AdvanceForward();				
-			}
+        {
+            if (IsFarFromTarget())
+            {
+                AdvanceForward();
+            }
 
-			handController.Use();
-		}
+            handController.Use();
+        }
 
-		private void AdvanceForward()
+        private bool IsFarFromTarget()
+        {
+            return ennemyController.CalculateDistanceWithTarget(currentEnnemyTarget.gameObject) > minimumDistanceBetweenEnnemies;
+        }
+
+        private void AdvanceForward()
 		{
 			mover.Move(Mover.Foward);
 		}

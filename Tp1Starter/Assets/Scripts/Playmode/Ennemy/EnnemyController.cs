@@ -94,7 +94,6 @@ namespace Playmode.Ennemy
             weaponSensor = rootTransform.GetComponentInChildren<WeaponSensor>();
             weaponSensorCollision = rootTransform.GetComponentInChildren<WeaponSensorCollision>();
 
-            strategy = new TurnAndShootStragegy(mover, handController);
         }
 
         private void CreateStartingWeapon()
@@ -137,7 +136,14 @@ namespace Playmode.Ennemy
                 case EnnemyStrategy.Careful:
                     typeSign.GetComponent<SpriteRenderer>().sprite = carefulSprite;
                     // Think of better way for that, possibly
-                    this.strategy = new CarefulStrategy(mover, handController, ennemySensor, medkitSensor, medkitSensorCollision, weaponSensor, weaponSensorCollision);
+                    this.strategy = new CarefulStrategy(mover, 
+                        handController, 
+                        ennemySensor, 
+                        medkitSensor, 
+                        medkitSensorCollision, 
+                        weaponSensor, 
+                        weaponSensorCollision
+                        );
                     break;
 
                 case EnnemyStrategy.Cowboy:
@@ -173,6 +179,7 @@ namespace Playmode.Ennemy
         {
             health.Heal(medkit.HealthValue);
 
+            //TODO DELETE
             var currentMedkit = transform.root.GetComponentInChildren<MedkitController>();
             medkit.ActivateAssociatedSpawner(medkit);
         }
