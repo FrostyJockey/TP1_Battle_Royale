@@ -178,10 +178,6 @@ namespace Playmode.Ennemy
         private void OnMedkitPickup(MedkitController medkit)
         {
             health.Heal(medkit.HealthValue);
-
-            //TODO DELETE
-            var currentMedkit = transform.root.GetComponentInChildren<MedkitController>();
-            medkit.ActivateAssociatedSpawner(medkit);
         }
 
         private void OnWeaponPickup(WeaponController weapon)
