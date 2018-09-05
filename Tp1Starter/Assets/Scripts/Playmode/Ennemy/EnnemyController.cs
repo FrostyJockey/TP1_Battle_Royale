@@ -179,7 +179,7 @@ namespace Playmode.Ennemy
         {
             health.Heal(medkit.HealthValue);
 
-            //TODO DELETE
+            
             var currentMedkit = transform.root.GetComponentInChildren<MedkitController>();
             medkit.ActivateAssociatedSpawner(medkit);
         }

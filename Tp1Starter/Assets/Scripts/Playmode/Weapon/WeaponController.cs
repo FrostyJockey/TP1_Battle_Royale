@@ -65,12 +65,6 @@ namespace Playmode.Weapon
             shotFiredSound = transform.root.GetComponentInChildren<AudioSource>();
         }
 
-        //TODO REMOVE
-        public void SetSpawnerNumber(int spawnerNumber)
-        {
-            this.spawnerNumber = spawnerNumber;
-        }
-
         public void Shoot()
         {
             if (CanShoot)
@@ -127,7 +121,7 @@ namespace Playmode.Weapon
 
         private void Hide(WeaponController weapon)
         {
-            //TODO EHHHH?
+            
             var currentWeapon = weapon.transform.root.gameObject;
 
             currentWeapon.SetActive(false);

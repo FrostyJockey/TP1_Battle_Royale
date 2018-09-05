@@ -8,7 +8,7 @@ using Playmode.Movement;
 namespace Playmode.Ennemy.Strategies
 {
 
-    //TODO : Create base class.
+    
 	public class NormalStrategy : IEnnemyStrategy
 	{
 

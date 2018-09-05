@@ -54,7 +54,7 @@ namespace Playmode.Ennemy.Strategies
             }
         }
 
-        //TODO : Remove ?
+        
         private void OnDestroy()
         {
             ennemySensor.OnEnnemySeen -= OnEnnemySeen;
