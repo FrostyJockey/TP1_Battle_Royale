@@ -53,7 +53,6 @@ namespace Playmode.Ennemy.Strategies
                 mover.Move(Mover.Foward);
             }
         }
-		
         private void OnDestroy()
         {
             ennemySensor.OnEnnemySeen -= OnEnnemySeen;
