@@ -8,7 +8,7 @@ using Playmode.Weapon;
 
 namespace Playmode.Ennemy.Strategies
 {
-    public class CowboyStrategy : IEnnemyStrategy
+    public class CowboyStrategy : BaseStrategy
     {
         private readonly EnnemySensor ennemySensor;
         private readonly Mover mover;
@@ -35,7 +35,7 @@ namespace Playmode.Ennemy.Strategies
             innerTimer = 0;
         }
 
-        public void Act()
+        public override void Act()
         {
             if (target != null)
             {
@@ -48,13 +48,12 @@ namespace Playmode.Ennemy.Strategies
             }
             else
             {
-                RotateFromBorders();
+                RotateFromBorders(mover);
 
                 mover.Move(Mover.Foward);
             }
         }
-
-        //TODO : Remove ?
+		
         private void OnDestroy()
         {
             ennemySensor.OnEnnemySeen -= OnEnnemySeen;
@@ -147,18 +146,6 @@ namespace Playmode.Ennemy.Strategies
             }
 
             return nextTarget;
-        }
-
-        private void RotateFromBorders()
-        {
-            if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height / 2) //pour gérer en même temps le haut et le bas
-            {
-                mover.Rotate(Mover.Clockwise);
-            }
-            else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width / 2)
-            {
-                mover.Rotate(Mover.Clockwise);
-            }
         }
     }
 }

@@ -12,7 +12,7 @@ using Playmode.Movement;
 
 namespace Playmode.Ennemy.Strategies
 {
-    public class CamperStrategy : IEnnemyStrategy
+    public class CamperStrategy : BaseStrategy
     {
         private readonly Mover mover;
         private readonly HandController handController;
@@ -47,7 +47,7 @@ namespace Playmode.Ennemy.Strategies
             ennemyController = mover.transform.root.GetComponentInChildren<EnnemyController>();
         }
 
-        public void Act()
+        public override void Act()
         {
             int currentHealth = mover.gameObject.GetComponent<Health>().HealthPoints;
 
@@ -91,7 +91,7 @@ namespace Playmode.Ennemy.Strategies
                     AimTowardsTarget(target);
                 }
 
-                RotateFromBorders();
+                RotateFromBorders(mover);
 
                 mover.Move(Mover.Foward);
             }
@@ -209,18 +209,6 @@ namespace Playmode.Ennemy.Strategies
             }
 
             return nextTarget;
-        }
-
-        private void RotateFromBorders()
-        {
-            if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height / 2) //pour gérer en même temps le haut et le bas
-            {
-                mover.Rotate(Mover.Clockwise);
-            }
-            else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width / 2)
-            {
-                mover.Rotate(Mover.Clockwise);
-            }
         }
     }
 }

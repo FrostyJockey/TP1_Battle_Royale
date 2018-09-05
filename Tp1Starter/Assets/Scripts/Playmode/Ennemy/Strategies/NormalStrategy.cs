@@ -8,8 +8,7 @@ using Playmode.Movement;
 namespace Playmode.Ennemy.Strategies
 {
 
-    //TODO : Create base class.
-	public class NormalStrategy : IEnnemyStrategy
+	public class NormalStrategy : BaseStrategy
 	{
 
 		private readonly Mover mover;
@@ -38,7 +37,7 @@ namespace Playmode.Ennemy.Strategies
 		}
 
 
-		public void Act()
+		public override void Act()
 		{
 			if (currentEnnemyTarget != null)
 			{
@@ -51,7 +50,7 @@ namespace Playmode.Ennemy.Strategies
 
 			else
 			{
-                RotateFromBorders();
+                RotateFromBorders(mover);
 
 				FindNewTargetDirection();
             }	
@@ -139,17 +138,7 @@ namespace Playmode.Ennemy.Strategies
             return nextTarget;
         }
 
-        private void RotateFromBorders()
-        {
-            if (mover.gameObject.transform.position.y * mover.gameObject.transform.position.y >= Screen.height / 2) //pour gérer en même temps le haut et le bas
-            {
-                mover.Rotate(Mover.Clockwise);
-            }
-            else if (mover.gameObject.transform.position.x * mover.gameObject.transform.position.x >= Screen.width / 2)
-            {
-                mover.Rotate(Mover.Clockwise);
-            }
-        }
+        
     }
 }
 
