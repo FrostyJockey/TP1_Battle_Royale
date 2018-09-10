@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//BEN_REVIEW : Namespace SVP, même si c'est un script de debug.
+
 #if UNITY_EDITOR
 
 public class ControlTemp : MonoBehaviour {

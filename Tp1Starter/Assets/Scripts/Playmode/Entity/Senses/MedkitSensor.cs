@@ -38,6 +38,7 @@ namespace Playmode.Entity.Senses
 
         public void See(MedkitController medkit)
         {
+            //BEN_CORRECTION : Risidus de programmation.
             Debug.Log("I see the medkit!");
 
             medkitsInSight.Add(medkit);
@@ -47,6 +48,7 @@ namespace Playmode.Entity.Senses
 
         public void LooseSightOf(MedkitController medkit)
         {
+            //BEN_CORRECTION : Risidus de programmation.
             Debug.Log("Where's the medkit??");
 
             medkitsInSight.Remove(medkit);

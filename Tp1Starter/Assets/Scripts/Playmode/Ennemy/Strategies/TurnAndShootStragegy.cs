@@ -3,6 +3,7 @@ using Playmode.Movement;
 
 namespace Playmode.Ennemy.Strategies
 {
+    //BEN_CORRECTION : Inutilisé. Devrait être supprimé.
     public class TurnAndShootStragegy : IEnnemyStrategy
     {
         private readonly Mover mover;

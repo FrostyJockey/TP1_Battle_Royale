@@ -135,6 +135,8 @@ namespace Playmode.Ennemy
             {
                 case EnnemyStrategy.Careful:
                     typeSign.GetComponent<SpriteRenderer>().sprite = carefulSprite;
+                    //BEN_CORRECTION : Je sais ce que cela veut dire, mais si vous lisez ce commentaire pour la première fois,
+                    //                 comment pouvez vous comprendre ce que cela veut dire ?
                     // Think of better way for that, possibly
                     this.strategy = new CarefulStrategy(mover, 
                         handController, 
@@ -167,6 +169,9 @@ namespace Playmode.Ennemy
         private void OnHit(int hitPoints, BulletController bullet)
         {
             health.Hit(hitPoints);
+            //BEN_CORRECTION : La bullet devrait se détruire tout seule lorsqu'elle rencontre un ennemi.
+            //
+            //                 L'ennemi devrait pas avoir à gérer cela.
             bullet.DestroyBullet();
         }
 
@@ -179,8 +184,10 @@ namespace Playmode.Ennemy
         {
             health.Heal(medkit.HealthValue);
 
-            var currentMedkit = transform.root.GetComponentInChildren<MedkitController>();
-            medkit.ActivateAssociatedSpawner(medkit);
+            var currentMedkit = transform.root.GetComponentInChildren<MedkitController>(); //BEN_CORRECION : Ligne Inutilisé.
+            //BEN_CORRECTION : Intruision dans les responsabilités du "Medkit". Le "Medkit" devrait activer lui même son
+            //                 "Spawner". Ce n'est pas la responsabilité de l'ennemi.
+            medkit.ActivateAssociatedSpawner(medkit); 
         }
 
         private void OnWeaponPickup(WeaponController weapon)
@@ -189,6 +196,8 @@ namespace Playmode.Ennemy
             currentWeapon.AddWeaponStats(weapon);
         }
 
+        //BEN_REVIEW : GetDistanceToTarget ? C'est pas un peu long "Calculate" ?
+        //             Aussi, aurait pu être statique.
         public float CalculateDistanceWithTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;
@@ -197,6 +206,7 @@ namespace Playmode.Ennemy
             return distance;
         }
 
+        //BEN_REVIEW : Idem.
         public float CalculateAngleWithTarget(GameObject targetedObject)
         {
             Vector3 spaceBetweenObjects = targetedObject.gameObject.transform.position - mover.gameObject.transform.position;

@@ -19,6 +19,8 @@ namespace Playmode.Ennemy.Strategies
         private readonly WeaponSensor weaponSensor;
         private readonly WeaponSensorCollision weaponSensorCollision;
         private readonly EnnemyController ennemyController;
+        
+        //BEN_CORRECTION : privates.
         bool trackingEnnemy;
         GameObject target;
         float innerTimer;

@@ -26,6 +26,9 @@ namespace Playmode.Ennemy.Strategies
         [SerializeField] private int safetyHealthCap = 50;
         private EnnemyController ennemyController;
 
+        //BEN_REVIEW : Une ligne ne devrait pas dépasser 160 caractères.
+        //
+        //             Ajoutez des retours de chariot.
         public CamperStrategy(Mover mover, HandController handController, EnnemySensor ennemySensor, MedkitSensor medkitSensor, WeaponSensor weaponSensor, MedkitSensorCollision medkitSensorCollision, WeaponSensorCollision weaponSensorCollision)
         {
             target = null;
@@ -49,8 +52,14 @@ namespace Playmode.Ennemy.Strategies
 
         public override void Act()
         {
+            //BEN_CORRECTION : Health devrait être obtenu à la construction.
+            //                 Je comprends pas d'ailleurs pourquoi ce n'est pas le cas.
             int currentHealth = mover.gameObject.GetComponent<Health>().HealthPoints;
 
+            //BEN_CORRECTION : Chiffre magique.
+            //BEN_REVIEW : Condition aurait pu être extraite dans une méthode pour plus de clarté.
+            //
+            //             Ex: if (IsLowHealth() && HasMedkit())
             if (currentHealth <= 30 && campingMedkit != null)
             {
                 AimTowardsTarget(campingMedkit);
@@ -98,6 +107,9 @@ namespace Playmode.Ennemy.Strategies
 
         }
 
+        //BEN_CORRECTION : Inutilisé.
+        //
+        //                 Ne l'avais-je pas mentionné durant la review ?
         private void OnDestroy()
         {
             ennemySensor.OnEnnemySeen -= OnEnnemySeen;

@@ -41,8 +41,14 @@ namespace Playmode.Pickups
         {
             var nextPickable = CreateRandomNumber();
 
+            //BEN_CORRECTION : Ça servait vraiment à rien de sortir ça dans une méthode.
             InitValues();
 
+            //BEN_CORRECTION : Lol wut ? « while (true && ...) »
+            //
+            //                 Si je puis me permettre....c'est franchement comique...mais ça devrait pas être là. Erreur de débutant.
+            //
+            //                 Aussi, votre logique me semble pas mal lourde pour ce que cela fait.
             while (true && spawnerAvailableCount < transform.childCount)
             {
                 nextSpawnPoint = NextRandomSpawnpointNumber();

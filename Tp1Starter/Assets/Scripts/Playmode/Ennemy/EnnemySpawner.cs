@@ -48,6 +48,7 @@ namespace Playmode.Ennemy
 
         private void SpawnEnnemies()
         {
+            //BEN_CORRECTION : Code en commentaires. À supprimer.
             //var stragegyProvider = new LoopingEnumerator<EnnemyStrategy>(DefaultStrategies);
             var colorProvider = new LoopingEnumerator<Color>(colors);
 
